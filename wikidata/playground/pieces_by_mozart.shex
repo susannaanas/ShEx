@@ -1,0 +1,15 @@
+PREFIX wp: <https://en.wikipedia.org/wiki/>
+PREFIX wd: <https://www.wikidata.org/wiki/>
+PREFIX wdt: <http://www.wikidata.org/prop/direct/>
+
+<composition_by_mozart> {
+	wdt:P31	Q207628 ;
+	wdt:P839	LITERAL ;
+	wdt:P528	LITERAL ;
+	p:P528 	@<kögels_catalogue_qualifier> .
+}
+
+<kögels_catalogue_qualifier> {
+    pq:P972	wd:Q162478 ;
+}
+
