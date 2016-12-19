@@ -1,0 +1,46 @@
+PREFIX wp: <https://en.wikipedia.org/wiki/>
+PREFIX wd: <https://www.wikidata.org/wiki/>
+PREFIX wdt: <http://www.wikidata.org/prop/direct/>
+PREFIX schema: <http://schema.org/>
+PREFIX p: <http://www.wikidata.org/prop/>
+
+
+<wikidata_pathway> {	
+	schema:article wp:pathway_wp_article ;
+	wdt:P31 wd:Q68685 ;
+	wdt:P1343	@<wikipathways_pathway> | <reactome_pathway> . # P1343: described by source
+}
+
+<wikipathways_pathway> {
+	wdt:P31	wd:Q857525 ; # P31 = instance of ; Q857525 = annotation
+	p:P31	@<object_node>
+	wdt:P921	wd:Q68685 ; # P921 = main subject; Q68685 = metabolic pathway
+	p:P921	@<object_node>
+	wdt:P2789	<wikipathways_pathway>	; # P2789 = connects with; 
+	p:P2789	@<object_node>
+	wdt:P527	(@<geneproduct> , @<protein> , @<metabolite> ) ; # wdt:P527 = has part
+	p:P527	@<object_node>
+	wdt:P2860	<citation> ; # P2860 = cites
+	p:P2860	@<object_node>
+}
+
+<geneproduct> {
+    wdt:P31		(@<rna>, @<protein>) ;
+	wdt:P702	@<gene> ; # P702 encoded by
+	wdt:P351	LITERAL  ; P351 ncbi gene id
+	wdt:P594	LITERAL . # P594 ensembl id
+}
+
+wp:pathway_wp_article {
+     schema:about @wd:item ;
+	 schema:language LITERAL # question: How do you indicate a range of eg. ISO languages covered by wikipedia
+}
+
+<Ref> {
+  wdt:P248 IRI;
+  ( wdt:P594 LITERAL
+  | wdt:P351 LITERAL ;
+    wdt:P813 xsd:dateTime ;
+    val:P813 IRI
+  )
+}

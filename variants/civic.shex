@@ -1,0 +1,57 @@
+PREFIX wp: <https://en.wikipedia.org/wiki/>
+PREFIX wd: <https://www.wikidata.org/wiki/>
+PREFIX wdt: <http://www.wikidata.org/prop/direct/>
+PREFIX schema: <http://schema.org/>
+PREFIX p: <http://www.wikidata.org/prop/>
+PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>
+PREFIX prov: <http://www.w3.org/ns/prov#>
+PREFIX pr: <http://www.wikidata.org/prop/reference/>
+
+<civic_variant_record> {
+     wdt:P31	@<variant_type> ; # @<variant_type> should be a placeholder for all possible values
+	 wdt:P644	LITERAL ;
+	 wdt:P645	LITERAL ;
+	 wdt:P1057	@<chromosome> ;
+	 wdt:P973	URL ;
+	 wdt:P361	@<gene> ;
+	 wdt:P3354	@<drug> ;
+	 p:P3354	@<provenance> ;
+	 wdt:P3355	@<drug> ;
+	 p:P3355	@<provenance> ;
+	 wdt:P3356	@<disease> ;
+	 p:P3356	@<provenance> ;
+	 wdt:P3357	@<disease> ;
+	 p:P3357	@<provenance> ;
+	 wdt:P3358	@<disease> ;
+	 p:P3358	@<provenance> ;
+	 wdt:P3359	@<disease> ;
+	 p:P3359	@<provenance> ;
+}
+
+<gene> {
+
+}
+
+<drug> {
+
+}
+
+<disease> {
+
+}
+
+<provenance> {
+	prov:wasDerivedFrom @<civic_reference> .
+}
+
+<civic_reference> {
+	wdt:P248	@<citation> ;
+	wdt:P813	xsd:dateTime ;
+	wdt:P854	IRI .
+}
+
+<citation> {
+	wdt:P31		wd:Q13442814;	
+	wdt:P698	LITERAL
+	wdt:P356	LITERAL
+}
