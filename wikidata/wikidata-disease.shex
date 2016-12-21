@@ -6,30 +6,32 @@ PREFIX p: <http://www.wikidata.org/prop/>
 
 <wikidata-disease> {
    wdt:P31	wd:Q12136 ;
-   wdt:P279 IRI ;
-   p:P279 @<wikidata-disease-provenance> ;
-   wdt:P1748	LITERAL ;
-   p:P1748	@<wikidata-disease-provenance> ;
-   wdt:P2176	@<wikidata-drug> ; 
-   p:P2176	@<wikidata-disease-provenance> ;
-   wdt:P2293	@<wikidata-gene> ; (Optional)
-   wdt:P2888	IRI ; # (Required)
-   p:P2888	@<miriam-provenance> ;
-   wdt:P429	LITERAL ; OMIM (optional)
-   p:P429	@<wikidata-disease-provenance> ;
-   wdt:P486	LITERAL ; # MeSH ID (Optional)
-   p:P486	@<wikidata-disease-provenance> ;
-   wdt:P493	LITERAL ; # ICD 9 (Optional)
-   p:P493	@<wikidata-disease-provenance> ;
-   wdt:P494	LITERAL ; # ICD 10 (Optional)
-   p:P494	@<wikidata-disease-provenance> ;
-   wdt:P699	LITERAL # Disease Ontology ID (Required)
-   p:P699	@<wikidata-disease-provenance> ;
-   wdt:P2892	LITERAL # UMLS-CUI ; (Optional)
-   p:P2892	@<wikidata-disease-provenance> ;
-   wdt:P1550	LITERAL # Orphanet ID (Optional)
-   p:P1550	@<wikidata-disease-provenance> .
+   (wdt:P279 IRI ;
+   p:P279 @<wikidata-disease-provenance> ;)
+   (wdt:P1748	LITERAL ;
+   p:P1748	@<wikidata-disease-provenance> ;)
+   (wdt:P2176	@<wikidata-drug> ; 
+   p:P2176	@<wikidata-disease-provenance> ;)
+   (wdt:P2293	@<wikidata-gene> ;)? 
+   (wdt:P2888	IRI ; # (Required)
+   p:P2888	@<miriam-provenance> ;)
+   (wdt:P429	LITERAL ; OMIM (optional)
+   p:P429	@<wikidata-disease-provenance> ;)
+   (wdt:P486	LITERAL ; # MeSH ID (Optional)
+   p:P486	@<wikidata-disease-provenance> ;)
+   (wdt:P493	LITERAL ; # ICD 9 (Optional)
+   p:P493	@<wikidata-disease-provenance> ;)
+   (wdt:P494	LITERAL ; # ICD 10 (Optional)
+   p:P494	@<wikidata-disease-provenance> ;)
+   (wdt:P699	LITERAL # Disease Ontology ID ;
+   p:P699	@<wikidata-disease-provenance> ;)
+   (wdt:P2892	LITERAL # UMLS-CUI ; 
+   p:P2892	@<wikidata-disease-provenance> ;)?
+   (wdt:P1550	LITERAL # Orphanet ID (Optional)
+   p:P1550	@<wikidata-disease-provenance> .)?
+   .
    UNIQUE(wdt:P699)
+   UNIQUE(rdfs:label, schema:description)
 }
 
 @<wikidata-disease-provenance> {
