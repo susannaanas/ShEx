@@ -1,8 +1,13 @@
+# Shape Expression for diseases coming from Disease Ontology in Wikidata
+
+#BASE <http://base.example/#>
 PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>
 PREFIX prov: <http://www.w3.org/ns/prov#>
 PREFIX wd: <https://www.wikidata.org/wiki/>
 PREFIX wdt: <http://www.wikidata.org/prop/direct/>
 PREFIX p: <http://www.wikidata.org/prop/>
+
+start = <wikidata-disease>
 
 <wikidata-disease> {
    wdt:P31	wd:Q12136 ;
