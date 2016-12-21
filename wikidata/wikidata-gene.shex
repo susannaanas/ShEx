@@ -1,0 +1,12 @@
+<wikidata-gene> {
+	wdt:P279	(wd:Q7187, Q20747295) ;
+	wdt:P593	LITERAL
+	p:P593	@<gene-provenance>
+	wdt:P1057	@<chromosomeshape>
+	p:P1057	@gene-provenance>
+	wdt:P644 LITERAL
+	p:P644 @<chromosome-locationshape>	
+	wdt:P645 LITERAL
+	p:P645 @<chromosome-locationshape>
+	wdt:P684 
+}
