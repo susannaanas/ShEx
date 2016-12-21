@@ -29,6 +29,7 @@ PREFIX p: <http://www.wikidata.org/prop/>
    p:P2892	@<wikidata-disease-provenance> ;
    wdt:P1550	LITERAL # Orphanet ID
    p:P1550	@<wikidata-disease-provenance> .
+   UNIQUE(wdt:P699)
 }
 
 @<wikidata-disease-provenance> {
