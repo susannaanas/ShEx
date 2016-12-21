@@ -28,7 +28,10 @@ PREFIX pr: <http://www.wikidata.org/prop/reference/>
 	 p:P3359	@<provenance> ;
 }
 
-<gene> {
+
+
+
+<chromosome-locationshape> {
 
 }
 
