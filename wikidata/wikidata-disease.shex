@@ -10,59 +10,56 @@ PREFIX p: <http://www.wikidata.org/prop/>
 start = <wikidata-disease>
 
 <wikidata-disease> {
-   wdt:P31	wd:Q12136 ;
-   (wdt:P279 IRI ;
-   p:P279 @<wikidata-disease-provenance> ;)
-   (wdt:P1748	LITERAL ; # NCI-Thesaurus
-   p:P1748	@<wikidata-disease-provenance> ;)? 
-   (wdt:P2176	@<wikidata-drug> ; # drug used for treatment
-   p:P2176	@<wikidata-disease-provenance> ;)?
-   (wdt:P2293	@<wikidata-gene> ;# genetic association
-   p:P2293	@<gene-association-profile)?  
-   (wdt:P2888	IRI ; 
-   p:P2888	@<miriam-provenance> ;)+
-   (wdt:P429	LITERAL ; OMIM (optional)?
-   p:P429	@<wikidata-disease-provenance> ;)
-   (wdt:P486	LITERAL ; # MeSH ID (Optional)
-   p:P486	@<wikidata-disease-provenance> ;)?
-   (wdt:P493	LITERAL ; # ICD 9 (Optional)
-   p:P493	@<wikidata-disease-provenance> ;)?
-   (wdt:P494	LITERAL ; # ICD 10 (Optional)
-   p:P494	@<wikidata-disease-provenance> ;)?
-   (wdt:P699	LITERAL # Disease Ontology ID ;
-   p:P699	@<wikidata-disease-provenance> ;){1}
-   (wdt:P2892	LITERAL # UMLS-CUI ; 
-   p:P2892	@<wikidata-disease-provenance> ;)?
-   (wdt:P1550	LITERAL # Orphanet ID (Optional)
-   p:P1550	@<wikidata-disease-provenance> .)?
-   .
-   UNIQUE(wdt:P699)
-   UNIQUE(rdfs:label, schema:description)
+   wdt:P31	wd:Q12136 ,
+   (wdt:P279 IRI ,
+   p:P279 @<wikidata-disease-provenance> )*,
+   (wdt:P1748	LITERAL , # NCI-Thesaurus
+   p:P1748	@<wikidata-disease-provenance> )*, 
+   wdt:P2176	@<wikidata-drug> , # drug used for treatment
+   p:P2176	@<wikidata-disease-provenance> ,
+   wdt:P2293	@<wikidata-gene> , # genetic association
+   p:P2293	@<gene-association-profile>, 
+   wdt:P2888	IRI , 
+   p:P2888	@<miriam-provenance> ,
+   wdt:P429	LITERAL , 
+   p:P429	@<wikidata-disease-provenance> ,
+   wdt:P486	LITERAL , # MeSH ID (Optional)
+   p:P486	@<wikidata-disease-provenance> ,
+   wdt:P493	LITERAL , # ICD 9 (Optional)
+   p:P493	@<wikidata-disease-provenance> ,
+   wdt:P494	LITERAL , # ICD 10 (Optional)
+   p:P494	@<wikidata-disease-provenance> ,
+   wdt:P699	LITERAL,  # Disease Ontology ID 
+   p:P699	@<wikidata-disease-provenance> ,
+   wdt:P2892	LITERAL, # UMLS-CUI  
+   p:P2892	@<wikidata-disease-provenance> ,
+   wdt:P1550	LITERAL, # Orphanet ID (Optional)
+   p:P1550	@<wikidata-disease-provenance>* 
 }
 
-@<wikidata-disease-provenance> {
-    prov:wasDerivedFrom @<do_reference> .
+<wikidata-disease-provenance> {
+    prov:wasDerivedFrom @<do_reference> 
 }
 
-@<gene-association-profile> {
-	pq:P459	LITERAL ;
-  	prov:wasDerivedFrom @<phenocarta_reference> .
+<gene-association-profile> {
+	pq:P459	LITERAL ,
+  	prov:wasDerivedFrom @<phenocarta_reference> 
 }
 
-@<do-reference> {
-    wdt:P248	wd:Q5282129 ;
-	wdt:P699	LITERAL ;
-	wdt:P813	xsd:
+<do_reference> {
+    wdt:P248	wd:Q5282129 ,
+	wdt:P699	LITERAL ,
+	wdt:P813	xsd:dateTime
 }
 
-@<phenocarta-reference> {
-    wdt:P248	@<phenocarta-release-item> ;
-	wdt:P699	LITERAL ;
-	wdt:P813	xsd:
+<phenocarta-reference> {
+    wdt:P248	@<phenocarta-release-item> ,
+	wdt:P699	LITERAL ,
+	wdt:P813	xsd:dateTime
 }
 
-@<phenocarta-release-item> {
-	wdt:P856	"http://chibi.ubc.ca/Gemma/phenotypes.html" ;
-	wdt:P1065	IRI ;
+<phenocarta-release-item> {
+	wdt:P856	"http://chibi.ubc.ca/Gemma/phenotypes.html" ,
+	wdt:P1065	IRI ,
 	wdt:P393	xsd:DateTime
 }
