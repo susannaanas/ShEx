@@ -10,8 +10,8 @@ PREFIX wdt: <http://www.wikidata.org/prop/direct/>
 	schema:description LITERAL ;
 	schema:version LITERAL ;
 	schema:dateModified xsd:DateTime ;
-	wdt:-	(@<wikidata_item>, LITERAL) ;
-	p:-		@<context>	.
+	(wdt:-	(@<wikidata_item>, LITERAL) ;
+	p:-		@<context>	.)?
 	UNIQUE (rdfs:label@-, schema:description@-)+
 }
 
