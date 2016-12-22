@@ -1,0 +1,25 @@
+PREFIX wp: <https://en.wikipedia.org/wiki/>
+PREFIX wd: <https://www.wikidata.org/wiki/>
+PREFIX wdt: <http://www.wikidata.org/prop/direct/>
+PREFIX schema: <http://schema.org/>
+PREFIX p: <http://www.wikidata.org/prop/>
+
+start = <wikipathways-pathway>
+
+<wikidata-wikipathways-pathway> {
+	wdt:P31	wd:Q857525 , # P31 = instance of, Q857525 = annotation
+	wd:P921	wd:Q68685 , # P921 = main subject, Q68685 = metabolic pathway
+	wdt:P703	(wd:, wd:), # P703 = found in taxon, 
+	wdt:P856	IRI, 
+    wdt:P527	(@<gene_product_shape>, @<metabolite_shape>, @<protein_shape>)+ , # P527 = has part
+	wdt:P2789	@<wikipathways-pathway>+ , # P2789 = connects with
+	wdt:P2860	@<citation>* ,
+	wdt:P2888	(IRI, @<native-wikipathways-pathway>)+, # P2888 = exact match
+}
+
+<native-wikipathways-pathway> {
+  rdf:type wp:Pathway+,
+  dc:identifier IRI+,
+  dcterms:identifier LITERAL, 
+  ...... 
+}
