@@ -6,22 +6,22 @@ PREFIX wd: <https://www.wikidata.org/wiki/>
 PREFIX wdt: <http://www.wikidata.org/prop/direct/>
 
 <wikidata_item> {
-	rdfs:label	LITERAL ;
-	schema:description LITERAL ;
-	schema:version LITERAL ;
-	schema:dateModified xsd:DateTime ;
-	(wdt:-	(@<wikidata_item>, LITERAL) ;
-	p:-		@<context>	.)?
+	rdfs:label	LITERAL ,
+	schema:description LITERAL ,
+	schema:version LITERAL ,
+	schema:dateModified xsd:DateTime ,
+	(wdt:-	(@<wikidata_item>, LITERAL) ,
+	p:-		@<wikidata-context>	.)?
 	UNIQUE (rdfs:label@-, schema:description@-)+
 }
 
 <context> {
-	pq:-	(@<wikidata_item>, LITERAL)* ;
+	pq:-	(@<wikidata_item>, LITERAL)* ,
 	rdf:type wikibase:BestRank
 	prov:wasDerivedFrom @<reference> .
 	wikibase:rank	(wikibase:NormalRank, wikibase:PreferedRank, wikibase:DeprecatedRank )
 }
 
 <reference> {
-   (wdt:-	(@<wikidata_item>, LITERAL))* ;  
+   (wdt:-	(@<wikidata_item>))* ,  
 }
