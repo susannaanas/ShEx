@@ -8,7 +8,7 @@ PREFIX wdt: <http://www.wikidata.org/prop/direct/>
 PREFIX p: <http://www.wikidata.org/prop/>
 PREFIX pq: <http://www.wikidata.org/prop/qualifier/>
 
-start = <wikidata-disease>
+start = <wikidata-drug>
 
 <wikidata-disease> {
 	wdt:P31	wd:Q12140 ;
