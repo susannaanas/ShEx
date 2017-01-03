@@ -60,7 +60,7 @@ start = <wikidata-disease>
 }
 
 <phenocarta-release-item> {
-	wdt:P856	"http://chibi.ubc.ca/Gemma/phenotypes.html" ,
+	wdt:P856	<http://chibi.ubc.ca/Gemma/phenotypes.html> ,
 	wdt:P1065	IRI ,
 	wdt:P393	xsd:DateTime
 }
