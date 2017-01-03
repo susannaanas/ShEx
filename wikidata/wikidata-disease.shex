@@ -6,6 +6,7 @@ PREFIX prov: <http://www.w3.org/ns/prov#>
 PREFIX wd: <https://www.wikidata.org/wiki/>
 PREFIX wdt: <http://www.wikidata.org/prop/direct/>
 PREFIX p: <http://www.wikidata.org/prop/>
+PREFIX pq: <http://www.wikidata.org/prop/qualifier/>
 
 start = <wikidata-disease>
 
