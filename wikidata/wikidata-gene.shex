@@ -1,3 +1,4 @@
+PREFIX wd: <https://www.wikidata.org/wiki/>
 PREFIX wdt: <http://www.wikidata.org/prop/direct/>
 PREFIX p: <http://www.wikidata.org/prop/>
 PREFIX prov: <http://www.w3.org/ns/prov#>
@@ -7,13 +8,19 @@ PREFIX prov: <http://www.w3.org/ns/prov#>
 	# P279 = subclass of
 	(
 		wdt:P279 IRI ;
-    	p:P279 @<wikidata-gene-provenance> ;
+    	p:P279 @<wikidata-ncbigene-provenance> ;
 	)+;
 	
-	# P593 = HomoloGene ID 
+	# P703 = found in taxon 
 	(
-		wdt:P593	LITERAL ; 
-		p:P593	@<wikidata-gene-provenance> ;
+		wdt:P703	IRI ;
+		p:P703 @<wikidata-ncbigene-provenance> ;
+	){1} ;
+	
+	# P688 = encodes
+	(
+		wdt:P688	IRI ;
+		p:P688 @<wikidata-protein-provenance> ;
 	)*;
 	
 	# P1057 = chromosome
@@ -35,14 +42,96 @@ PREFIX prov: <http://www.w3.org/ns/prov#>
 			p:P645 @<chromosome-location-provenance> ;
 		)+;
 	)*;
+	
+	# P684 = ortholog
+	(
+		 wdt:P684	IRI ;
+		 p:P684	@<ortholog-provenance> ;
+	)* ;
+	
+	# P2888 = exact match
+    (
+		wdt:P2888	IRI ; 
+    	p:P2888	@<miriam-provenance> ;
+	)* ;
+	
+	# P2548 = strand orientation 
+	(
+	 	wdt:P2548	IRI ;
+		p:P2548	@<wikidata-ncbigene-provenance>
+	)+ ;
+
+	
+
+	## IDENTIFIERS
+	# P351 = Entrez Gene ID
+	(
+		wdt:P351 LITERAL ;
+		p:P351 @<wikidata-ncbigene-provenance> ;
+	){1} ;
+	
+	# P353 = HGNC gene symbol
+	(
+		wdt:P353 LITERAL ;
+		p:P353 @<wikidata-ncbigene-provenance> ;
+	)* ;
+	
+	# P354 = HGNC gene symbol
+	(
+		wdt:P354 LITERAL ;
+		p:P354 @<wikidata-ncbigene-provenance> ;
+	)* ;
+	
+	# P594 = Enembl Gene ID
+	(
+		wdt:P351 LITERAL ;
+		p:P351 @<wikidata-ncbigene-provenance> ;
+	)* ;
+	
+	# P639 = RefSeqID
+	(
+		wdt:P639	LITERAL ;
+		p:P639	@<wikidata-ncbigene-provenance> ;
+	)* ;
+	
+	# P704 = Ensembl Transcript ID
+	(
+		wdt:P704	LITERAL ;
+		p:P704	@<wikidata-ensembl-provenance> ;
+	)* ;
+	
+	# P593 = HomoloGene ID 
+	(
+		wdt:P593	LITERAL ; 
+		p:P593	@<wikidata-ncbigene-provenance> ;
+	)*;
+	
+	
 }
 
-<wikidata-gene-provenance> {
+
+## PROVENANCE
+<wikidata-ncbigene-provenance> {
 	prov:wasDerivedFrom @<ncbi-gene-reference>+ ;
 }
 
+<wikidata-ensembl-provenance> {
+	prov:wasDerivedFrom @<ensembl-gene-reference>+ ;
+}
 <ncbi-gene-reference> {
    
+}
+
+<ensembl-gene-reference> {
+   
+}
+
+<wikidata-protein-provenance> {
+	prov:wasDerivedFrom @<uniprot-reference>+ ;
+}
+
+<uniprot-reference> {
+	
 }
 
 <chromosome-provenance> {
@@ -52,3 +141,16 @@ PREFIX prov: <http://www.w3.org/ns/prov#>
 <chromosome-location-provenance> {
 
 } 
+
+<ortholog-provenance> {
+	prov:wasDerivedFrom	@<homologene-reference>+ ;
+}
+
+<homologene-reference> {
+	
+}
+
+<miriam-provenance> {
+   wdt:P248		wd:Q16335166 ;
+   wdt:P854		IRI ;
+}
