@@ -1,12 +1,54 @@
+PREFIX wdt: <http://www.wikidata.org/prop/direct/>
+PREFIX p: <http://www.wikidata.org/prop/>
+PREFIX prov: <http://www.w3.org/ns/prov#>
+
 <wikidata-gene> {
-	wdt:P279	(wd:Q7187, Q20747295) ;
-	wdt:P593	LITERAL
-	p:P593	@<gene-provenance>
-	wdt:P1057	@<chromosomeshape>
-	p:P1057	@gene-provenance>
-	wdt:P644 LITERAL
-	p:P644 @<chromosome-locationshape>	
-	wdt:P645 LITERAL
-	p:P645 @<chromosome-locationshape>
-	wdt:P684 
+    
+	# P279 = subclass of
+	(
+		wdt:P279 IRI ;
+    	p:P279 @<wikidata-gene-provenance> ;
+	)+;
+	
+	# P593 = HomoloGene ID 
+	(
+		wdt:P593	LITERAL ; 
+		p:P593	@<wikidata-gene-provenance> ;
+	)*;
+	
+	# P1057 = chromosome
+	(
+		wdt:P1057	LITERAL ;
+		p:P1057	@<chromosome-provenance> ;
+	)*;
+	
+	
+	# P644 = genomic start
+	# P645 = genomic end
+	(
+		(
+			wdt:P644 LITERAL ;
+		 	p:P644 @<chromosome-location-provenance> ;
+		)+;	
+		(
+			wdt:P645 LITERAL ;
+			p:P645 @<chromosome-location-provenance> ;
+		)+;
+	)*;
 }
+
+<wikidata-gene-provenance> {
+	prov:wasDerivedFrom @<ncbi-gene-reference>+ ;
+}
+
+<ncbi-gene-reference> {
+   
+}
+
+<chromosome-provenance> {
+
+}
+
+<chromosome-location-provenance> {
+
+} 

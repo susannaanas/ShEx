@@ -16,26 +16,26 @@ start = <wikidata-disease>
    p:P279 @<wikidata-disease-provenance> )*;
    (wdt:P1748	LITERAL ; # NCI-Thesaurus
    p:P1748	@<wikidata-disease-provenance> )*; 
-   wdt:P2176	@<wikidata-drug> ; # drug used for treatment
-   p:P2176	@<wikidata-disease-provenance> ;
-   wdt:P2293	@<wikidata-gene> ; # genetic association
-   p:P2293	@<gene-association-profile>; 
-   wdt:P2888	IRI ; 
-   p:P2888	@<miriam-provenance> ;
-   wdt:P429	LITERAL ; 
-   p:P429	@<wikidata-disease-provenance> ;
-   wdt:P486	LITERAL ; # MeSH ID (Optional)
-   p:P486	@<wikidata-disease-provenance> ;
-   wdt:P493	LITERAL ; # ICD 9 (Optional)
-   p:P493	@<wikidata-disease-provenance> ;
-   wdt:P494	LITERAL ; # ICD 10 (Optional)
-   p:P494	@<wikidata-disease-provenance> ;
-   wdt:P699	LITERAL;  # Disease Ontology ID 
-   p:P699	@<wikidata-disease-provenance> ;
-   wdt:P2892	LITERAL; # UMLS-CUI  
-   p:P2892	@<wikidata-disease-provenance> ;
-   wdt:P1550	LITERAL; # Orphanet ID (Optional)
-   p:P1550	@<wikidata-disease-provenance>* 
+   (wdt:P2176	@<wikidata-drug> ; # drug used for treatment
+   p:P2176	@<wikidata-disease-provenance>)* ;
+   (wdt:P2293	@<wikidata-gene> ; # genetic association
+   p:P2293	@<gene-association-profile>)*; 
+   (wdt:P2888	IRI ; 
+   p:P2888	@<miriam-provenance>)* ;
+   (wdt:P429	LITERAL ; 
+   p:P429	@<wikidata-disease-provenance>)* ;
+   (wdt:P486	LITERAL ; # MeSH ID 
+   p:P486	@<wikidata-disease-provenance>)* ;
+   (wdt:P493	LITERAL* ; # ICD 9 (Optional)
+   p:P493	@<wikidata-disease-provenance>)* ;
+   (wdt:P494	LITERAL* ; # ICD 10 (Optional)
+   p:P494	@<wikidata-disease-provenance>)* ;
+   (wdt:P699	LITERAL+;  # Disease Ontology ID 
+   p:P699	@<wikidata-disease-provenance>)+ ;
+   (wdt:P2892	LITERAL; # UMLS-CUI  
+   p:P2892	@<wikidata-disease-provenance>)+ ;
+   (wdt:P1550	LITERAL; # Orphanet ID 
+   p:P1550	@<wikidata-disease-provenance>)* 
 }
 
 <wikidata-disease-provenance> {
@@ -44,7 +44,7 @@ start = <wikidata-disease>
 
 <gene-association-profile> {
 	pq:P459	LITERAL ;
-  	prov:wasDerivedFrom @<phenocarta_reference> 
+  	prov:wasDerivedFrom @<phenocarta-reference> 
 }
 
 <do_reference> {
@@ -64,3 +64,17 @@ start = <wikidata-disease>
 	wdt:P1065	IRI ;
 	wdt:P393	xsd:DateTime
 }
+
+<wikidata-drug> {
+	wdt:P31	wd:Q12140 ;
+}
+
+<wikidata-gene> {
+	wdt:P279	wd:Q7187 ;
+}
+
+<miriam-provenance> {
+   wdt:P248		wd:Q16335166 ;
+   wdt:P854		IRI ;
+}
+
