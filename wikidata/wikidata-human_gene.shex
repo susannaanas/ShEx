@@ -34,31 +34,31 @@ start = <wikidata-disease>
 	(
 		wdt:P1057	
 			[
-				wd:Q430258,  # human chromosome 1
-				wd:Q638893,  # human chromosome 2
-				wd:Q668633,  # human chromosome 3
-				wd:Q836605,  # human chromosome 4
-				wd:Q840741,  # human chromosome 5
-				wd:Q540857,  # human chromosome 6
-				wd:Q657319,  # human chromosome 7
-				wd:Q572848,  # human chromosome 8
-				wd:Q840604,  # human chromosome 9
-				wd:Q840737,  # human chromosome 10
-				wd:Q847096,  # human chromosome 11
-				wd:Q847102,  # human chromosome 12
-				wd:Q840734,  # human chromosome 13
-				wd:Q138955,  # human chromosome 14
-				wd:Q765245,  # human chromosome 15
-				wd:Q742870,  # human chromosome 16
-				wd:Q220677,  # human chromosome 17
-				wd:Q780468,  # human chromosome 18
-				wd:Q510786,  # human chromosome 19
-				wd:Q666752,  # human chromosome 20
-				wd:Q753218,  # human chromosome 21
-				wd:Q753805,  # human chromosome 22
-				wd:Q61333,  # human chromosome X
-				wd:Q202771,  # human chromosome Y
-				wd:Q27075,  # human chromosome MT
+				wd:Q430258  # human chromosome 1
+				wd:Q638893  # human chromosome 2
+				wd:Q668633  # human chromosome 3
+				wd:Q836605  # human chromosome 4
+				wd:Q840741  # human chromosome 5
+				wd:Q540857  # human chromosome 6
+				wd:Q657319  # human chromosome 7
+				wd:Q572848  # human chromosome 8
+				wd:Q840604  # human chromosome 9
+				wd:Q840737  # human chromosome 10
+				wd:Q847096  # human chromosome 11
+				wd:Q847102  # human chromosome 12
+				wd:Q840734  # human chromosome 13
+				wd:Q138955  # human chromosome 14
+				wd:Q765245  # human chromosome 15
+				wd:Q742870  # human chromosome 16
+				wd:Q220677  # human chromosome 17
+				wd:Q780468  # human chromosome 18
+				wd:Q510786  # human chromosome 19
+				wd:Q666752  # human chromosome 20
+				wd:Q753218  # human chromosome 21
+				wd:Q753805  # human chromosome 22
+				wd:Q61333  # human chromosome X
+				wd:Q202771  # human chromosome Y
+				wd:Q27075  # human chromosome MT
 
 			]+ ;
 		p:P1057	@<chromosome-provenance> ;
