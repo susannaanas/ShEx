@@ -1,20 +1,27 @@
+# Shape Expression for diseases coming from Disease Ontology in Wikidata
+
 PREFIX wd: <https://www.wikidata.org/wiki/>
 PREFIX wdt: <http://www.wikidata.org/prop/direct/>
 PREFIX p: <http://www.wikidata.org/prop/>
 PREFIX prov: <http://www.w3.org/ns/prov#>
+PREFIX pq: <http://www.wikidata.org/prop/qualifier/>
+PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>
+
+start = <wikidata-disease>
 
 <wikidata-gene> {
     
 	# P279 = subclass of
 	(
 		wdt:P279 IRI ;
-    	p:P279 @<wikidata-ncbigene-provenance> ;
+    	p:P279 @<wikidata-ncbigene-provenance>* ;
+		p:P279 @<wikidata-ensemblgene-provenance>*  ;
 	)+;
 	
 	# P703 = found in taxon 
 	(
-		wdt:P703	IRI ;
-		p:P703 @<wikidata-ncbigene-provenance> ;
+		wdt:P703	wd:Q15978631 ;
+		p:P703 @<wikidata-ensemblgene-provenance> ;
 	){1} ;
 	
 	# P688 = encodes
@@ -25,7 +32,35 @@ PREFIX prov: <http://www.w3.org/ns/prov#>
 	
 	# P1057 = chromosome
 	(
-		wdt:P1057	LITERAL ;
+		wdt:P1057	
+			[
+				wd:Q430258,  # human chromosome 1
+				wd:Q638893,  # human chromosome 2
+				wd:Q668633,  # human chromosome 3
+				wd:Q836605,  # human chromosome 4
+				wd:Q840741,  # human chromosome 5
+				wd:Q540857,  # human chromosome 6
+				wd:Q657319,  # human chromosome 7
+				wd:Q572848,  # human chromosome 8
+				wd:Q840604,  # human chromosome 9
+				wd:Q840737,  # human chromosome 10
+				wd:Q847096,  # human chromosome 11
+				wd:Q847102,  # human chromosome 12
+				wd:Q840734,  # human chromosome 13
+				wd:Q138955,  # human chromosome 14
+				wd:Q765245,  # human chromosome 15
+				wd:Q742870,  # human chromosome 16
+				wd:Q220677,  # human chromosome 17
+				wd:Q780468,  # human chromosome 18
+				wd:Q510786,  # human chromosome 19
+				wd:Q666752,  # human chromosome 20
+				wd:Q753218,  # human chromosome 21
+				wd:Q753805,  # human chromosome 22
+				wd:Q61333,  # human chromosome X
+				wd:Q202771,  # human chromosome Y
+				wd:Q27075,  # human chromosome MT
+
+			]+ ;
 		p:P1057	@<chromosome-provenance> ;
 	)*;
 	
@@ -97,7 +132,7 @@ PREFIX prov: <http://www.w3.org/ns/prov#>
 	# P704 = Ensembl Transcript ID
 	(
 		wdt:P704	LITERAL ;
-		p:P704	@<wikidata-ensembl-provenance> ;
+		p:P704	@<wikidata-ensembltranscipt-provenance> ;
 	)* ;
 	
 	# P593 = HomoloGene ID 
@@ -115,14 +150,27 @@ PREFIX prov: <http://www.w3.org/ns/prov#>
 	prov:wasDerivedFrom @<ncbi-gene-reference>+ ;
 }
 
-<wikidata-ensembl-provenance> {
+<wikidata-ensemblgene-provenance> {
 	prov:wasDerivedFrom @<ensembl-gene-reference>+ ;
 }
+
+<wikidata-ensembltranscipt-provenance> {
+	prov:wasDerivedFrom @<ensembl-transcript-reference>+ ;
+}
+
 <ncbi-gene-reference> {
-   
+      wdt:P248	wd:Q20950174 ;
+	  wdt:P351	LITERAL ;
+	  wdt:P813	xsd:dateTime ;
 }
 
 <ensembl-gene-reference> {
+      wdt:P248	wd:Q27975061 ;
+	  wdt:P594	LITERAL ;
+	  wdt:P813	xsd:dateTime ;
+}
+
+<ensembl-transcript-reference> {
    
 }
 
@@ -131,7 +179,9 @@ PREFIX prov: <http://www.w3.org/ns/prov#>
 }
 
 <uniprot-reference> {
-	
+	wdt:P248	wd:Q905695 ;
+	wdt:P352	LITERAL ;
+	wdt:P813	xsd:dateTime ;
 }
 
 <chromosome-provenance> {
