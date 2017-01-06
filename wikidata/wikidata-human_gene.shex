@@ -32,37 +32,9 @@ start = <wikidata-disease>
 	
 	# P1057 = chromosome
 	(
-		wdt:P1057	
-			[
-				wd:Q430258  # human chromosome 1
-				wd:Q638893  # human chromosome 2
-				wd:Q668633  # human chromosome 3
-				wd:Q836605  # human chromosome 4
-				wd:Q840741  # human chromosome 5
-				wd:Q540857  # human chromosome 6
-				wd:Q657319  # human chromosome 7
-				wd:Q572848  # human chromosome 8
-				wd:Q840604  # human chromosome 9
-				wd:Q840737  # human chromosome 10
-				wd:Q847096  # human chromosome 11
-				wd:Q847102  # human chromosome 12
-				wd:Q840734  # human chromosome 13
-				wd:Q138955  # human chromosome 14
-				wd:Q765245  # human chromosome 15
-				wd:Q742870  # human chromosome 16
-				wd:Q220677  # human chromosome 17
-				wd:Q780468  # human chromosome 18
-				wd:Q510786  # human chromosome 19
-				wd:Q666752  # human chromosome 20
-				wd:Q753218  # human chromosome 21
-				wd:Q753805  # human chromosome 22
-				wd:Q61333  # human chromosome X
-				wd:Q202771  # human chromosome Y
-				wd:Q27075  # human chromosome MT
-
-			]+ ;
+		wdt:P1057 @<human-chromosomes> ;					
 		p:P1057	@<chromosome-provenance> ;
-	)*;
+	)?;
 	
 	
 	# P644 = genomic start
@@ -70,11 +42,11 @@ start = <wikidata-disease>
 	(
 		(
 			wdt:P644 LITERAL ;
-		 	p:P644 @<chromosome-location-provenance> ;
+		 	p:P644 @<genomic-location-provenance> ;
 		)+;	
 		(
 			wdt:P645 LITERAL ;
-			p:P645 @<chromosome-location-provenance> ;
+			p:P645 @<genomic-location-provenance> ;
 		)+;
 	)*;
 	
@@ -92,8 +64,8 @@ start = <wikidata-disease>
 	
 	# P2548 = strand orientation 
 	(
-	 	wdt:P2548	IRI ;
-		p:P2548	@<wikidata-ncbigene-provenance>
+	 	wdt:P2548	@<strand-orrientation> ;
+		p:P2548	@<wikidata-strand-orrientation-provenance>
 	)+ ;
 
 	
@@ -101,7 +73,7 @@ start = <wikidata-disease>
 	## IDENTIFIERS
 	# P351 = Entrez Gene ID
 	(
-		wdt:P351 LITERAL ;
+		wdt:P351 [0-9]+ ;
 		p:P351 @<wikidata-ncbigene-provenance> ;
 	){1} ;
 	
@@ -111,7 +83,7 @@ start = <wikidata-disease>
 		p:P353 @<wikidata-ncbigene-provenance> ;
 	)* ;
 	
-	# P354 = HGNC gene symbol
+	# P354 = HGNC gene ID
 	(
 		wdt:P354 LITERAL ;
 		p:P354 @<wikidata-ncbigene-provenance> ;
@@ -120,7 +92,7 @@ start = <wikidata-disease>
 	# P594 = Enembl Gene ID
 	(
 		wdt:P351 LITERAL ;
-		p:P351 @<wikidata-ncbigene-provenance> ;
+		p:P351 @<wikidata-ensemblgene-provenance> ;
 	)* ;
 	
 	# P639 = RefSeqID
@@ -132,7 +104,7 @@ start = <wikidata-disease>
 	# P704 = Ensembl Transcript ID
 	(
 		wdt:P704	LITERAL ;
-		p:P704	@<wikidata-ensembltranscipt-provenance> ;
+		p:P704	@<wikidata-ensemblgene-provenance> ;
 	)* ;
 	
 	# P593 = HomoloGene ID 
@@ -154,8 +126,9 @@ start = <wikidata-disease>
 	prov:wasDerivedFrom @<ensembl-gene-reference>+ ;
 }
 
-<wikidata-ensembltranscipt-provenance> {
-	prov:wasDerivedFrom @<ensembl-transcript-reference>+ ;
+<wikidata-strand-orrientation-provenance> {
+    pq:P659		@<genomic-assembly> ;
+    prov:wasDerivedFrom @<ensembl-gene-reference>+ ;
 }
 
 <ncbi-gene-reference> {
@@ -185,11 +158,15 @@ start = <wikidata-disease>
 }
 
 <chromosome-provenance> {
-
+   pq:P659	@<genomic-assembly>+ ;
+   prov:wasDerivedFrom @<ensembl-gene-reference>+ ;   
 }
 
-<chromosome-location-provenance> {
-
+<genomic-location-provenance> {
+	pq:1057	@<human-chromosomes>+ ;
+	
+	pq:P659	@<genomic-assembly>+ ;
+	prov:wasDerivedFrom @<ensembl-gene-reference>+ ;  
 } 
 
 <ortholog-provenance> {
@@ -204,3 +181,42 @@ start = <wikidata-disease>
    wdt:P248		wd:Q16335166 ;
    wdt:P854		IRI ;
 }
+
+<human-chromosomes> [
+				wd:Q430258  # human chromosome 1
+				wd:Q638893  # human chromosome 2
+				wd:Q668633  # human chromosome 3
+				wd:Q836605  # human chromosome 4
+				wd:Q840741  # human chromosome 5
+				wd:Q540857  # human chromosome 6
+				wd:Q657319  # human chromosome 7
+				wd:Q572848  # human chromosome 8
+				wd:Q840604  # human chromosome 9
+				wd:Q840737  # human chromosome 10
+				wd:Q847096  # human chromosome 11
+				wd:Q847102  # human chromosome 12
+				wd:Q840734  # human chromosome 13
+				wd:Q138955  # human chromosome 14
+				wd:Q765245  # human chromosome 15
+				wd:Q742870  # human chromosome 16
+				wd:Q220677  # human chromosome 17
+				wd:Q780468  # human chromosome 18
+				wd:Q510786  # human chromosome 19
+				wd:Q666752  # human chromosome 20
+				wd:Q753218  # human chromosome 21
+				wd:Q753805  # human chromosome 22
+				wd:Q61333  # human chromosome X
+				wd:Q202771  # human chromosome Y
+				wd:Q27075  # human chromosome MT
+
+			]
+			
+<genomic-assembly> [
+   				wd:Q20966585 # Genome assembly GRCh38
+				wd:Q21067546 # Genome assembly GRCh37
+			]
+			
+<strand-orrientation> [
+				wd:Q22809711 # reverse strand
+				wd:Q22809680 # forward strand
+]
