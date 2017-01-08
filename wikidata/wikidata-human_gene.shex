@@ -9,7 +9,7 @@ PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>
 PREFIX prv: <http://www.wikidata.org/prop/reference/value/>
 PREFIX pr:  <http://www.wikidata.org/prop/reference/>
 
-# start = <wikidata-human_gene>
+start = <wikidata-human_gene>
 
 <wikidata-human_gene> {
     
@@ -81,7 +81,7 @@ PREFIX pr:  <http://www.wikidata.org/prop/reference/>
 	
 	# P353 = HGNC gene symbol
 	(
-		wdt:P353 [0-9]+ ;
+		wdt:P353 LITERAL ;
 		p:P353 @<wikidata-ncbigene-provenance> ;
 	)? ;
 	
