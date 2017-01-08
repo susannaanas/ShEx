@@ -6,10 +6,12 @@ PREFIX p: <http://www.wikidata.org/prop/>
 PREFIX prov: <http://www.w3.org/ns/prov#>
 PREFIX pq: <http://www.wikidata.org/prop/qualifier/>
 PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>
+PREFIX prv: <http://www.wikidata.org/prop/reference/value/>
+PREFIX pr:  <http://www.wikidata.org/prop/reference/>
 
-start = <wikidata-disease>
+# start = <wikidata-human_gene>
 
-<wikidata-gene> {
+<wikidata-human_gene> {
     
 	# P279 = subclass of
 	(
@@ -75,51 +77,49 @@ start = <wikidata-disease>
 	(
 		wdt:P351 [0-9]+ ;
 		p:P351 @<wikidata-ncbigene-provenance> ;
-	){1} ;
+	)?;
 	
 	# P353 = HGNC gene symbol
 	(
-		wdt:P353 LITERAL ;
+		wdt:P353 [0-9]+ ;
 		p:P353 @<wikidata-ncbigene-provenance> ;
-	)* ;
+	)? ;
 	
 	# P354 = HGNC gene ID
 	(
 		wdt:P354 LITERAL ;
 		p:P354 @<wikidata-ncbigene-provenance> ;
-	)* ;
+	)? ;
 	
 	# P594 = Enembl Gene ID
 	(
 		wdt:P351 LITERAL ;
 		p:P351 @<wikidata-ensemblgene-provenance> ;
-	)* ;
+	)? ;
 	
 	# P639 = RefSeqID
 	(
 		wdt:P639	LITERAL ;
 		p:P639	@<wikidata-ncbigene-provenance> ;
-	)* ;
+	)? ;
 	
 	# P704 = Ensembl Transcript ID
 	(
 		wdt:P704	LITERAL ;
 		p:P704	@<wikidata-ensemblgene-provenance> ;
-	)* ;
+	)? ;
 	
 	# P593 = HomoloGene ID 
 	(
 		wdt:P593	LITERAL ; 
 		p:P593	@<wikidata-ncbigene-provenance> ;
-	)*;
-	
-	
+	)?;	
 }
 
 
 ## PROVENANCE
 <wikidata-ncbigene-provenance> {
-	prov:wasDerivedFrom @<ncbi-gene-reference>+ ;
+	prov:wasDerivedFrom @<ncbi-gene-reference> ;
 }
 
 <wikidata-ensemblgene-provenance> {
@@ -132,19 +132,16 @@ start = <wikidata-disease>
 }
 
 <ncbi-gene-reference> {
-      wdt:P248	wd:Q20950174 ;
-	  wdt:P351	LITERAL ;
-	  wdt:P813	xsd:dateTime ;
+      pr:P248	wd:Q20950174 ;
+	  pr:P351	LITERAL ;
+	  pr:P813	xsd:dateTime ;
+	  prv:P813	IRI ;
 }
 
 <ensembl-gene-reference> {
-      wdt:P248	wd:Q27975061 ;
-	  wdt:P594	LITERAL ;
-	  wdt:P813	xsd:dateTime ;
-}
-
-<ensembl-transcript-reference> {
-   
+      pr:P248	wd:Q27975061 ;
+	  pr:P594	LITERAL ;
+	  # wdt:P813	xsd:dateTime ;
 }
 
 <wikidata-protein-provenance> {
@@ -152,9 +149,9 @@ start = <wikidata-disease>
 }
 
 <uniprot-reference> {
-	wdt:P248	wd:Q905695 ;
-	wdt:P352	LITERAL ;
-	wdt:P813	xsd:dateTime ;
+	pr:P248	wd:Q905695 ;
+	pr:P352	LITERAL ;
+	pr:P813	xsd:dateTime ;
 }
 
 <chromosome-provenance> {
@@ -163,8 +160,7 @@ start = <wikidata-disease>
 }
 
 <genomic-location-provenance> {
-	pq:1057	@<human-chromosomes>+ ;
-	
+	pq:1057	@<human-chromosomes>+ ;	
 	pq:P659	@<genomic-assembly>+ ;
 	prov:wasDerivedFrom @<ensembl-gene-reference>+ ;  
 } 
