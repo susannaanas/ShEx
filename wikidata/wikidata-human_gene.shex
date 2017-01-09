@@ -1,6 +1,6 @@
 # Shape Expression for diseases coming from Disease Ontology in Wikidata
 
-PREFIX wd: <https://www.wikidata.org/wiki/>
+PREFIX wd: <http://www.wikidata.org/entity/>
 PREFIX wdt: <http://www.wikidata.org/prop/direct/>
 PREFIX p: <http://www.wikidata.org/prop/>
 PREFIX prov: <http://www.w3.org/ns/prov#>
@@ -15,7 +15,7 @@ PREFIX ps: <http://www.wikidata.org/prop/statement/>
 <wikidata-human_gene> {
     
 	# P279 = subclass of
-	p:P279 { prov:wasDerivedFrom @<ncbi-gene-reference> }*;
+	p:P279 { prov:wasDerivedFrom @<ncbi-gene-reference> OR @<ensembl-gene-reference> }*;
 	
 	# P703 = found in taxon 
 	p:P703 {
@@ -48,68 +48,80 @@ PREFIX ps: <http://www.wikidata.org/prop/statement/>
 	
 	# P2888 = exact match
     p:P2888	{
-		ps:P248		[wd:Q16335166] }* ;
+		prov:wasDerivedFrom {
+								pr:P248		[wd:Q16335166] ;
+								pr:P854		IRI ; }
+		}* ;
 	
 	# P2548 = strand orientation 
 	p:P2548	{
 		    ps:P2548	@<strand-orrientation> ;
-		    pq:P659		@<genomic-assembly> ;
-		    prov:wasDerivedFrom @<ensembl-gene-reference>+ ;
+		    pq:P659		@<genomic-assembly>+ ;
+		    prov:wasDerivedFrom @<ensembl-gene-reference> ;
 		}+ ;
 	
 	## IDENTIFIERS
 	# P351 = Entrez Gene ID
-	p:P351 @<wikidata-ncbigene-provenance>{1} ;
+	p:P351 {
+			prov:wasDerivedFrom @<ncbi-gene-reference> ;
+			}* ; 
 	
 	# P353 = HGNC gene symbol
-	p:P353 @<wikidata-ncbigene-provenance>*;
+	p:P353 {
+			prov:wasDerivedFrom @<ncbi-gene-reference> ;
+			}* ;
 	
 	# P354 = HGNC gene ID
-	p:P354 @<wikidata-ncbigene-provenance>* ;
+	p:P354 {
+			prov:wasDerivedFrom @<ncbi-gene-reference> ;
+			}* ;
 	
 	# P594 = Enembl Gene ID
-	p:P351 @<wikidata-ensemblgene-provenance>* ;
+	p:P594 {
+		prov:wasDerivedFrom @<ensembl-gene-reference>+ ;
+		}* ;
 	
-	p:P639	@<wikidata-ncbigene-provenance>* ;
+	# P639 = RefSeq RNA ID
+	p:P639	{
+			prov:wasDerivedFrom @<ncbi-gene-reference> ;
+			}* ;
 	
 	# P704 = Ensembl Transcript ID
-	p:P704	@<wikidata-ensemblgene-provenance>* ;
+	p:P704	{
+		prov:wasDerivedFrom @<ensembl-gene-reference>+ ;
+	}* ;
 	
 	# P593 = HomoloGene ID 
-	p:P593	@<wikidata-ncbigene-provenance>* ;	
+	p:P593	{
+			prov:wasDerivedFrom @<ncbi-gene-reference> ;
+			}* ;
 }
 
 
 ## PROVENANCE
-<wikidata-ncbigene-provenance> {
-	prov:wasDerivedFrom @<ncbi-gene-reference> ;
-}
 
-<wikidata-ensemblgene-provenance> {
-	prov:wasDerivedFrom @<ensembl-gene-reference>+ ;
-}
 
 <ncbi-gene-reference> {
-      pr:P248	wd:Q20950174 ;
+      pr:P248	[wd:Q20641742 wd:Q20950174 ] ;
 	  pr:P351	LITERAL ;
 	  pr:P813	xsd:dateTime ;
 	  prv:P813	IRI ;
 }
 
 <ensembl-gene-reference> {
-      pr:P248	wd:Q27975061 ;
+      pr:P248	[wd:Q27975061] ;
 	  pr:P594	LITERAL ;
 	  # wdt:P813	xsd:dateTime ;
 }
 
 <uniprot-reference> {
-	pr:P248	wd:Q905695 ;
+	pr:P248	[wd:Q905695] ;
 	pr:P352	LITERAL ;
 	pr:P813	xsd:dateTime ;
 }
 
 <genomic-location-provenance> {
-	pq:1057	@<human-chromosomes>+ ;	
+	pq:P1057	@<human-chromosomes>+ ;	
 	pq:P659	@<genomic-assembly>+ ;
 	prov:wasDerivedFrom @<ensembl-gene-reference>+ ;  
 } 
