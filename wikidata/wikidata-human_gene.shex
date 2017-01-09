@@ -8,112 +8,75 @@ PREFIX pq: <http://www.wikidata.org/prop/qualifier/>
 PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>
 PREFIX prv: <http://www.wikidata.org/prop/reference/value/>
 PREFIX pr:  <http://www.wikidata.org/prop/reference/>
+PREFIX ps: <http://www.wikidata.org/prop/statement/>
 
-start = <wikidata-human_gene>
+# start = <wikidata-human_gene>
 
 <wikidata-human_gene> {
     
 	# P279 = subclass of
-	(
-		wdt:P279 IRI ;
-    	p:P279 @<wikidata-ncbigene-provenance>* ;
-		p:P279 @<wikidata-ensemblgene-provenance>*  ;
-	)+;
+	p:P279 { prov:wasDerivedFrom @<ncbi-gene-reference> }*;
 	
 	# P703 = found in taxon 
-	(
-		wdt:P703	wd:Q15978631 ;
-		p:P703 @<wikidata-ensemblgene-provenance> ;
-	){1} ;
+	p:P703 {
+     	ps:P703 [wd:Q15978631] ;
+	 	prov:wasDerivedFrom @<ensembl-gene-reference>+ 
+	 }{1} ;
 	
 	# P688 = encodes
-	(
-		wdt:P688	IRI ;
-		p:P688 @<wikidata-protein-provenance> ;
-	)*;
+	p:P688 { prov:wasDerivedFrom @<uniprot-reference>}+;
 	
-	# P1057 = chromosome
-	(
-		wdt:P1057 @<human-chromosomes> ;					
-		p:P1057	@<chromosome-provenance> ;
-	)?;
-	
+	# P1057 = chromosome					
+	p:P1057	{
+	   ps:P1057 @<human-chromosomes> ;
+	   pq:P659	@<genomic-assembly>+ ;  
+	   prov:wasDerivedFrom @<ensembl-gene-reference>+ ;   
+	}* ;
 	
 	# P644 = genomic start
 	# P645 = genomic end
 	(
-		(
-			wdt:P644 LITERAL ;
-		 	p:P644 @<genomic-location-provenance> ;
-		)+;	
-		(
-			wdt:P645 LITERAL ;
-			p:P645 @<genomic-location-provenance> ;
-		)+;
+		p:P644 @<genomic-location-provenance>+;	
+		p:P645 @<genomic-location-provenance>+;
 	)*;
 	
 	# P684 = ortholog
-	(
-		 wdt:P684	IRI ;
-		 p:P684	@<ortholog-provenance> ;
-	)* ;
+	p:P684	{
+	    pq:P703	IRI ;
+		prov:wasDerivedFrom	@<homologene-reference> ;
+	}* ;
 	
 	# P2888 = exact match
-    (
-		wdt:P2888	IRI ; 
-    	p:P2888	@<miriam-provenance> ;
-	)* ;
+    p:P2888	{
+		ps:P248		[wd:Q16335166] }* ;
 	
 	# P2548 = strand orientation 
-	(
-	 	wdt:P2548	@<strand-orrientation> ;
-		p:P2548	@<wikidata-strand-orrientation-provenance>
-	)+ ;
-
+	p:P2548	{
+		    ps:P2548	@<strand-orrientation> ;
+		    pq:P659		@<genomic-assembly> ;
+		    prov:wasDerivedFrom @<ensembl-gene-reference>+ ;
+		}+ ;
 	
-
 	## IDENTIFIERS
 	# P351 = Entrez Gene ID
-	(
-		wdt:P351 [0-9]+ ;
-		p:P351 @<wikidata-ncbigene-provenance> ;
-	)?;
+	p:P351 @<wikidata-ncbigene-provenance>{1} ;
 	
 	# P353 = HGNC gene symbol
-	(
-		wdt:P353 LITERAL ;
-		p:P353 @<wikidata-ncbigene-provenance> ;
-	)? ;
+	p:P353 @<wikidata-ncbigene-provenance>*;
 	
 	# P354 = HGNC gene ID
-	(
-		wdt:P354 LITERAL ;
-		p:P354 @<wikidata-ncbigene-provenance> ;
-	)? ;
+	p:P354 @<wikidata-ncbigene-provenance>* ;
 	
 	# P594 = Enembl Gene ID
-	(
-		wdt:P351 LITERAL ;
-		p:P351 @<wikidata-ensemblgene-provenance> ;
-	)? ;
+	p:P351 @<wikidata-ensemblgene-provenance>* ;
 	
-	# P639 = RefSeqID
-	(
-		wdt:P639	LITERAL ;
-		p:P639	@<wikidata-ncbigene-provenance> ;
-	)? ;
+	p:P639	@<wikidata-ncbigene-provenance>* ;
 	
 	# P704 = Ensembl Transcript ID
-	(
-		wdt:P704	LITERAL ;
-		p:P704	@<wikidata-ensemblgene-provenance> ;
-	)? ;
+	p:P704	@<wikidata-ensemblgene-provenance>* ;
 	
 	# P593 = HomoloGene ID 
-	(
-		wdt:P593	LITERAL ; 
-		p:P593	@<wikidata-ncbigene-provenance> ;
-	)?;	
+	p:P593	@<wikidata-ncbigene-provenance>* ;	
 }
 
 
@@ -124,11 +87,6 @@ start = <wikidata-human_gene>
 
 <wikidata-ensemblgene-provenance> {
 	prov:wasDerivedFrom @<ensembl-gene-reference>+ ;
-}
-
-<wikidata-strand-orrientation-provenance> {
-    pq:P659		@<genomic-assembly> ;
-    prov:wasDerivedFrom @<ensembl-gene-reference>+ ;
 }
 
 <ncbi-gene-reference> {
@@ -144,19 +102,10 @@ start = <wikidata-human_gene>
 	  # wdt:P813	xsd:dateTime ;
 }
 
-<wikidata-protein-provenance> {
-	prov:wasDerivedFrom @<uniprot-reference>+ ;
-}
-
 <uniprot-reference> {
 	pr:P248	wd:Q905695 ;
 	pr:P352	LITERAL ;
 	pr:P813	xsd:dateTime ;
-}
-
-<chromosome-provenance> {
-   pq:P659	@<genomic-assembly>+ ;
-   prov:wasDerivedFrom @<ensembl-gene-reference>+ ;   
 }
 
 <genomic-location-provenance> {
@@ -165,17 +114,11 @@ start = <wikidata-human_gene>
 	prov:wasDerivedFrom @<ensembl-gene-reference>+ ;  
 } 
 
-<ortholog-provenance> {
-	prov:wasDerivedFrom	@<homologene-reference>+ ;
-}
 
 <homologene-reference> {
-	
-}
-
-<miriam-provenance> {
-   wdt:P248		wd:Q16335166 ;
-   wdt:P854		IRI ;
+	pr:P248 IRI;
+	pr:P593 LITERAL;
+	pr:P813	xsd:dateTime ;
 }
 
 <human-chromosomes> [
