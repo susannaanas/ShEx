@@ -1,5 +1,4 @@
-# Shape Expression for diseases coming from Disease Ontology in Wikidata
-
+# Shape Expression for Human genes in Wikidata 
 PREFIX wd: <http://www.wikidata.org/entity/>
 PREFIX wdt: <http://www.wikidata.org/prop/direct/>
 PREFIX p: <http://www.wikidata.org/prop/>
