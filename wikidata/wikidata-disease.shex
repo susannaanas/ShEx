@@ -11,52 +11,75 @@ PREFIX pq: <http://www.wikidata.org/prop/qualifier/>
 start = <wikidata-disease>
 
 <wikidata-disease> {
-   wdt:P31	wd:Q12136 ;
-   (wdt:P279 IRI ;
-   p:P279 @<wikidata-disease-provenance> )*;
-   (wdt:P1748	LITERAL ; # NCI-Thesaurus
-   p:P1748	@<wikidata-disease-provenance> )*; 
-   (wdt:P2176	@<wikidata-drug> ; # drug used for treatment
-   p:P2176	@<wikidata-disease-provenance>)* ;
-   (wdt:P2293	@<wikidata-gene> ; # genetic association
-   p:P2293	@<gene-association-profile>)*; 
-   (wdt:P2888	IRI ; 
-   p:P2888	@<miriam-provenance>)* ;
-   (wdt:P429	LITERAL ; 
-   p:P429	@<wikidata-disease-provenance>)* ;
-   (wdt:P486	LITERAL ; # MeSH ID 
-   p:P486	@<wikidata-disease-provenance>)* ;
-   (wdt:P493	LITERAL* ; # ICD 9 (Optional)
-   p:P493	@<wikidata-disease-provenance>)* ;
-   (wdt:P494	LITERAL* ; # ICD 10 (Optional)
-   p:P494	@<wikidata-disease-provenance>)* ;
-   (wdt:P699	LITERAL+;  # Disease Ontology ID 
-   p:P699	@<wikidata-disease-provenance>)+ ;
-   (wdt:P2892	LITERAL; # UMLS-CUI  
-   p:P2892	@<wikidata-disease-provenance>)+ ;
-   (wdt:P1550	LITERAL; # Orphanet ID 
-   p:P1550	@<wikidata-disease-provenance>)* 
-}
+   # P31 = instance of
+   p:P31 { ps:P31 [wd:Q12136] ; prov:wasDerivedFrom @<do_reference> }
+   
+   # P279 = subclass of
+   p:P279 { prov:wasDerivedFrom @<do_reference> }*
+  
+   # P1748 =  NCI-Thesaurus
+   p:P1748	{prov:wasDerivedFrom @<do_reference> }*
+	
+   # P2176 = drug used for treatment
+   wdt:P2176	@<wikidata-drug> ; # drug used for treatment
+   p:P2176	{ps:P2176 @<wikidata-drug> ; }
+   
+   # P2293 = genetic association
+   p:P2293 {
+		    ps:P2293 @<wikidata-human_gene> ;
+		  	pq:P459	LITERAL ;
+		    prov:wasDerivedFrom @<phenocarta-reference> 
+		  }* 
+   
+   # P2888 = exact match
+   p:P2888	{
+	prov:wasDerivedFrom {
+							pr:P248		[wd:Q16335166] ;
+							pr:P854		IRI ; }
+	}* ;
+   
+   
+   ## IDENTIFIERS 
+   # P699 = Disease Ontology ID  
+   p:P699 { ps:P699 LITERAL ;
+            prov:wasDerivedFrom @<do_reference> }+ ;
+   
+   # P486 =  MeSH ID 
+   p:P486 { ps:P486 LITERAL ;
+            prov:wasDerivedFrom @<do_reference> }* ;
+	
+   # P492 =  OMIM ID
+   p:P492 { ps:P492 LITERAL ;
+            prov:wasDerivedFrom @<do_reference> }* ;
+					
+   # P493 =  ICD 9
+   p:P493 { ps:P493 LITERAL ;
+            prov:wasDerivedFrom @<do_reference> }* ;		
+   
+   # P494 =  ICD 10
+   p:P494 { ps:P494 LITERAL ;
+            prov:wasDerivedFrom @<do_reference> }* ;
+   
+   # P1550 = Orphanet ID 
+   p:P1550 { ps:P1550 LITERAL ;
+            prov:wasDerivedFrom @<do_reference> }* ;
+   
+   # P2892 = UMLS-CUI
+   p:P2892 { ps:P2892 LITERAL ;
+            prov:wasDerivedFrom @<do_reference> }* ;
 
-<wikidata-disease-provenance> {
-    prov:wasDerivedFrom @<do_reference> 
-}
-
-<gene-association-profile> {
-	pq:P459	LITERAL ;
-  	prov:wasDerivedFrom @<phenocarta-reference> 
 }
 
 <do_reference> {
-    wdt:P248	wd:Q5282129 ;
-	wdt:P699	LITERAL ;
-	wdt:P813	xsd:dateTime
+    pr:P248	wd:Q5282129 ;
+	pr:P699	LITERAL ;
+	pr:P813	xsd:dateTime
 }
 
 <phenocarta-reference> {
-    wdt:P248	@<phenocarta-release-item> ;
-	wdt:P699	LITERAL ;
-	wdt:P813	xsd:dateTime
+    pr:P248	@<phenocarta-release-item> ;
+	pr:P699	LITERAL ;
+	pr:P813	xsd:dateTime
 }
 
 <phenocarta-release-item> {
@@ -66,15 +89,7 @@ start = <wikidata-disease>
 }
 
 <wikidata-drug> {
-	wdt:P31	wd:Q12140 ;
+
 }
 
-<wikidata-gene> {
-	wdt:P279	wd:Q7187 ;
-}
-
-<miriam-provenance> {
-   wdt:P248		wd:Q16335166 ;
-   wdt:P854		IRI ;
-}
 
