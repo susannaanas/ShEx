@@ -1,35 +1,34 @@
 # Shape Expression for diseases coming from Disease Ontology in Wikidata
 
-#BASE <http://base.example/#>
-PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>
-PREFIX prov: <http://www.w3.org/ns/prov#>
-PREFIX wd: <https://www.wikidata.org/wiki/>
+PREFIX wd: <http://www.wikidata.org/entity/>
 PREFIX wdt: <http://www.wikidata.org/prop/direct/>
 PREFIX p: <http://www.wikidata.org/prop/>
+PREFIX prov: <http://www.w3.org/ns/prov#>
 PREFIX pq: <http://www.wikidata.org/prop/qualifier/>
-
-start = <wikidata-disease>
+PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>
+PREFIX prv: <http://www.wikidata.org/prop/reference/value/>
+PREFIX pr:  <http://www.wikidata.org/prop/reference/>
+PREFIX ps: <http://www.wikidata.org/prop/statement/>
 
 <wikidata-disease> {
    # P31 = instance of
-   p:P31 { ps:P31 [wd:Q12136] ; prov:wasDerivedFrom @<do_reference> }
+   p:P31 { ps:P31 [wd:Q12136] ; prov:wasDerivedFrom @<do_reference> } ;
    
    # P279 = subclass of
-   p:P279 { prov:wasDerivedFrom @<do_reference> }*
+   p:P279 { prov:wasDerivedFrom @<do_reference> }* ;
   
    # P1748 =  NCI-Thesaurus
-   p:P1748	{prov:wasDerivedFrom @<do_reference> }*
+   p:P1748	{prov:wasDerivedFrom @<do_reference> }* ;
 	
    # P2176 = drug used for treatment
-   wdt:P2176	@<wikidata-drug> ; # drug used for treatment
-   p:P2176	{ps:P2176 @<wikidata-drug> ; }
+   p:P2176	{ps:P2176 @<wikidata-drug> ; } ;
    
    # P2293 = genetic association
    p:P2293 {
 		    ps:P2293 @<wikidata-human_gene> ;
 		  	pq:P459	LITERAL ;
-		    prov:wasDerivedFrom @<phenocarta-reference> 
-		  }* 
+		    prov:wasDerivedFrom @<phenocarta-reference> ;
+		  }* ;
    
    # P2888 = exact match
    p:P2888	{
@@ -85,11 +84,170 @@ start = <wikidata-disease>
 <phenocarta-release-item> {
 	wdt:P856	<http://chibi.ubc.ca/Gemma/phenotypes.html> ;
 	wdt:P1065	IRI ;
-	wdt:P393	xsd:DateTime
+	wdt:P393	xsd:DateTime ;
 }
 
 <wikidata-drug> {
 
 }
 
+<wikidata-human_gene> {
+    
+	# P279 = subclass of
+	p:P279 { prov:wasDerivedFrom @<ncbi-gene-reference> OR @<ensembl-gene-reference> }*;
+	
+	# P703 = found in taxon 
+	p:P703 {
+     	ps:P703 [wd:Q15978631] ;
+	 	prov:wasDerivedFrom @<ensembl-gene-reference>+ 
+	 }{1} ;
+	
+	# P688 = encodes
+	p:P688 { prov:wasDerivedFrom @<uniprot-reference>}+;
+	
+	# P1057 = chromosome					
+	p:P1057	{
+	   ps:P1057 @<human-chromosomes> ;
+	   pq:P659	@<genomic-assembly>+ ;  
+	   prov:wasDerivedFrom @<ensembl-gene-reference>+ ;   
+	}* ;
+	
+	# P644 = genomic start
+	# P645 = genomic end
+	(
+		p:P644 @<genomic-location-provenance>+;	
+		p:P645 @<genomic-location-provenance>+;
+	)*;
+	
+	# P684 = ortholog
+	p:P684	{
+	    pq:P703	IRI ;
+		prov:wasDerivedFrom	@<homologene-reference> ;
+	}* ;
+	
+	# P2888 = exact match
+    p:P2888	{
+		prov:wasDerivedFrom {
+								pr:P248		[wd:Q16335166] ;
+								pr:P854		IRI ; }
+		}* ;
+	
+	# P2548 = strand orientation 
+	p:P2548	{
+		    ps:P2548	@<strand-orrientation> ;
+		    pq:P659		@<genomic-assembly>+ ;
+		    prov:wasDerivedFrom @<ensembl-gene-reference> ;
+		}+ ;
+	
+	## IDENTIFIERS
+	# P351 = Entrez Gene ID
+	p:P351 {
+			prov:wasDerivedFrom @<ncbi-gene-reference> ;
+			}* ; 
+	
+	# P353 = HGNC gene symbol
+	p:P353 {
+			prov:wasDerivedFrom @<ncbi-gene-reference> ;
+			}* ;
+	
+	# P354 = HGNC gene ID
+	p:P354 {
+			prov:wasDerivedFrom @<ncbi-gene-reference> ;
+			}* ;
+	
+	# P594 = Enembl Gene ID
+	p:P594 {
+		prov:wasDerivedFrom @<ensembl-gene-reference>+ ;
+		}* ;
+	
+	# P639 = RefSeq RNA ID
+	p:P639	{
+			prov:wasDerivedFrom @<ncbi-gene-reference> ;
+			}* ;
+	
+	# P704 = Ensembl Transcript ID
+	p:P704	{
+		prov:wasDerivedFrom @<ensembl-gene-reference>+ ;
+	}* ;
+	
+	# P593 = HomoloGene ID 
+	p:P593	{
+			prov:wasDerivedFrom @<ncbi-gene-reference> ;
+			}* ;
+}
+
+
+## PROVENANCE
+
+
+<ncbi-gene-reference> {
+      pr:P248	[wd:Q20641742 wd:Q20950174 ] ;
+	  pr:P351	LITERAL ;
+	  pr:P813	xsd:dateTime ;
+	  prv:P813	IRI ;
+}
+
+<ensembl-gene-reference> {
+      pr:P248	[wd:Q27975061] ;
+	  pr:P594	LITERAL ;
+	  # wdt:P813	xsd:dateTime ;
+}
+
+<uniprot-reference> {
+	pr:P248	[wd:Q905695] ;
+	pr:P352	LITERAL ;
+	pr:P813	xsd:dateTime ;
+}
+
+<genomic-location-provenance> {
+	pq:P1057	@<human-chromosomes>+ ;	
+	pq:P659	@<genomic-assembly>+ ;
+	prov:wasDerivedFrom @<ensembl-gene-reference>+ ;  
+} 
+
+
+<homologene-reference> {
+	pr:P248 IRI;
+	pr:P593 LITERAL;
+	pr:P813	xsd:dateTime ;
+}
+
+<human-chromosomes> [
+				wd:Q430258  # human chromosome 1
+				wd:Q638893  # human chromosome 2
+				wd:Q668633  # human chromosome 3
+				wd:Q836605  # human chromosome 4
+				wd:Q840741  # human chromosome 5
+				wd:Q540857  # human chromosome 6
+				wd:Q657319  # human chromosome 7
+				wd:Q572848  # human chromosome 8
+				wd:Q840604  # human chromosome 9
+				wd:Q840737  # human chromosome 10
+				wd:Q847096  # human chromosome 11
+				wd:Q847102  # human chromosome 12
+				wd:Q840734  # human chromosome 13
+				wd:Q138955  # human chromosome 14
+				wd:Q765245  # human chromosome 15
+				wd:Q742870  # human chromosome 16
+				wd:Q220677  # human chromosome 17
+				wd:Q780468  # human chromosome 18
+				wd:Q510786  # human chromosome 19
+				wd:Q666752  # human chromosome 20
+				wd:Q753218  # human chromosome 21
+				wd:Q753805  # human chromosome 22
+				wd:Q61333  # human chromosome X
+				wd:Q202771  # human chromosome Y
+				wd:Q27075  # human chromosome MT
+
+			]
+			
+<genomic-assembly> [
+   				wd:Q20966585 # Genome assembly GRCh38
+				wd:Q21067546 # Genome assembly GRCh37
+			]
+			
+<strand-orrientation> [
+				wd:Q22809711 # reverse strand
+				wd:Q22809680 # forward strand
+]
 
