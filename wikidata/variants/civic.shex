@@ -11,10 +11,12 @@ PREFIX pr: <http://www.wikidata.org/prop/reference/>
  	# P31 = instance of
  	p:P31 { ps:P31	@<variant_type> ;
 	        prov:wasDerivedFrom @<civic-variant-reference>;
+		  }+
 			
  	# P3343 = biological variant of
 	p:P3343 { ps:P3343	@<human_gene> ;
 	        prov:wasDerivedFrom @<civic-variant-reference>;
+		    }{1}
 	
 	# The properties genomic start and genomic end are both optional, but if one exist the others needs to exist as well
 	# P644 = genomic start
@@ -40,7 +42,7 @@ PREFIX pr: <http://www.wikidata.org/prop/reference/>
  	          prov:wasDerivedFrom @<civic-evidence-reference>+ ;
 			}*
   	# P3355 = negative therapeutic predictor
- 	p:P3355 { ps:P3355	@<drug> ;
+ 	p:P3355 { ps:P3355	@<pharmaceutical_drug> ;
 	          # P2175 = medical condition treated 
 	 		  pq:P2175	@<wikidata-disease>+ ;
  	          prov:wasDerivedFrom @<civic-evidence-reference>+ ;
@@ -101,15 +103,34 @@ PREFIX pr: <http://www.wikidata.org/prop/reference/>
 }
 
 <civic_reference> {
-	wdt:P248	@<citation> ;
-	wdt:P813	xsd:dateTime ;
-	wdt:P854	IRI .
+	pr:P248	@<citation> ;
+	pr:P813	xsd:dateTime ;
+	pr:P854	IRI .
 }
 
 <citation> {
-	wdt:P31		wd:Q13442814;	
-	wdt:P698	LITERAL
-	wdt:P356	LITERAL
+	wdt:P31		wd:Q13442814 ;	
+	wdt:P698	LITERAL ;
+	wdt:P356	LITERAL ;
+}
+
+<pharmaceutical_drug> {
+    # P31 = instance of & wd:Q12140 = Pharmaceutical drug
+ 	p:P31 { ps:P31	[wd:Q12140] ;
+ 	          prov:wasDerivedFrom @<civic-evidence-reference>+ ;
+			}*
+			
+    # P274 = chemical formula
+ 	p:P274 { ps:P274	LITERAL ;
+ 	          prov:wasDerivedFrom @<pubchem-compound-reference>+ ;
+			}*
+}
+
+<pubchem-compound-reference> {
+	pr:P248 [wd:Q278487] ;
+	pr:P662	LITERAL ;
+	pr:1476	LITERAL ;
+	pr:P813	xsd:dateTime ;
 }
 
 
@@ -147,3 +168,7 @@ PREFIX pr: <http://www.wikidata.org/prop/reference/>
    				wd:Q20966585 # Genome assembly GRCh38
 				wd:Q21067546 # Genome assembly GRCh37
 			]
+			
+<variant_type> [
+		       wd:Q27429979 # Missense variant
+]

@@ -9,12 +9,12 @@ PREFIX prv: <http://www.wikidata.org/prop/reference/value/>
 PREFIX pr:  <http://www.wikidata.org/prop/reference/>
 PREFIX ps: <http://www.wikidata.org/prop/statement/>
 
-# start = <wikidata-human_gene>
+start = <wikidata-human_gene>
 
 <wikidata-human_gene> {
-    
 	# P279 = subclass of
-	p:P279 { prov:wasDerivedFrom @<ncbi-gene-reference> OR @<ensembl-gene-reference> }*;
+	p:P279 { ps:P279 [wd:Q7187] ;
+	         prov:wasDerivedFrom @<ncbi-gene-reference> OR @<ensembl-gene-reference> }*;
 	
 	# P703 = found in taxon 
 	p:P703 {
