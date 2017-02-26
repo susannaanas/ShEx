@@ -28,15 +28,17 @@ start = @<wikidata-disease>
 # 		  	pq:P459	LITERAL ;
 # 		    prov:wasDerivedFrom @<phenocarta-reference> ;
 # 		  }* ;
-	
+#
     # P2888 = exact match
     p:P2888	{
 		prov:wasDerivedFrom @<miriam_reference> OR @<do_reference>+ ;
  	}* ;
 
     ## IDENTIFIERS
-	@<diease_ontology_id>
-   
+    # P699 = Disease Ontology ID
+    p:P699 { ps:P699 LITERAL ;
+             prov:wasDerivedFrom @<do_reference> }+ ;
+
     # P486 =  MeSH ID
     p:P486 { ps:P486 LITERAL ;
             prov:wasDerivedFrom @<do_reference> }* ;
@@ -61,12 +63,6 @@ start = @<wikidata-disease>
     p:P2892 { ps:P2892 LITERAL ;
              prov:wasDerivedFrom @<do_reference> }* ;
 
-}
-
-<disease_ontology_id> {
-   # P699 = Disease Ontology ID
-   p:P699 { ps:P699 LITERAL ;
-            prov:wasDerivedFrom @<do_reference> }+ ;
 }
 
 <do_reference> {
