@@ -23,46 +23,50 @@ start = @<wikidata-disease>
 #     p:P2176	{ps:P2176 @<wikidata-drug> ; }* ;
 #
 #    # P2293 = genetic association
-   p:P2293 {
- 		    ps:P2293 @<wikidata-human_gene> ;
- 		  	pq:P459	LITERAL ;
- 		    prov:wasDerivedFrom @<phenocarta-reference> ;
- 		  }* ;
-#
+#     p:P2293 {
+# 		    # ps:P2293 @<wikidata-human_gene> ; TODO: Fix the human gene shape
+# 		  	pq:P459	LITERAL ;
+# 		    prov:wasDerivedFrom @<phenocarta-reference> ;
+# 		  }* ;
+	
     # P2888 = exact match
     p:P2888	{
 		prov:wasDerivedFrom @<miriam_reference> OR @<do_reference>+ ;
  	}* ;
 
     ## IDENTIFIERS
-    # P699 = Disease Ontology ID
-    p:P699 { ps:P699 LITERAL ;
-             prov:wasDerivedFrom @<do_reference> }+ ;
-
+	@<diease_ontology_id>
+   
     # P486 =  MeSH ID
-   p:P486 { ps:P486 LITERAL ;
+    p:P486 { ps:P486 LITERAL ;
             prov:wasDerivedFrom @<do_reference> }* ;
 
-#    # P492 =  OMIM ID
+    # P492 =  OMIM ID
     p:P492 { ps:P492 LITERAL ;
              prov:wasDerivedFrom @<do_reference> }* ;
 
-#    # P493 =  ICD 9
+    # P493 =  ICD 9
     p:P493 { ps:P493 LITERAL ;
              prov:wasDerivedFrom @<do_reference> }* ;
 
-#    # P494 =  ICD 10
+    # P494 =  ICD 10
     p:P494 { ps:P494 LITERAL ;
              prov:wasDerivedFrom @<do_reference> }* ;
 
-#    # P1550 = Orphanet ID
+    # P1550 = Orphanet ID
     p:P1550 { ps:P1550 LITERAL ;
              prov:wasDerivedFrom @<do_reference> }* ;
 
-#    # P2892 = UMLS-CUI
+    # P2892 = UMLS-CUI
     p:P2892 { ps:P2892 LITERAL ;
              prov:wasDerivedFrom @<do_reference> }* ;
 
+}
+
+<disease_ontology_id> {
+   # P699 = Disease Ontology ID
+   p:P699 { ps:P699 LITERAL ;
+            prov:wasDerivedFrom @<do_reference> }+ ;
 }
 
 <do_reference> {
