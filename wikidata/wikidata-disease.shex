@@ -13,12 +13,6 @@ PREFIX ps: <http://www.wikidata.org/prop/statement/>
 start = @<wikidata-disease>
 
 <wikidata-disease> {
-   # # P31 = instance of
-    p:P31 { ps:P31 [wd:Q12136] ; prov:wasDerivedFrom @<do_reference> } ;
-
-#    # P1748 =  NCI-Thesaurus
-     p:P1748	{prov:wasDerivedFrom @<do_reference> }* ;
-#
 #    # P2176 = drug used for treatment
 #     p:P2176	{ps:P2176 @<wikidata-drug> ; }* ;
 #
@@ -29,42 +23,70 @@ start = @<wikidata-disease>
 # 		    prov:wasDerivedFrom @<phenocarta-reference> ;
 # 		  }* ;
 #
-    # P2888 = exact match
-    p:P2888	{
-		prov:wasDerivedFrom @<miriam_reference> OR @<do_reference>+ ;
- 	}* ;
+    
+	## STATEMENTS
+	p:P31 @<P31_instance_of_disease>
+    p:P2888	@<P2888_exact_match>* ;
 
     ## IDENTIFIERS
-    # P699 = Disease Ontology ID
-    p:P699 { ps:P699 LITERAL ;
-             prov:wasDerivedFrom @<do_reference> }+ ;
+    p:P699 @<P699_disease_ontology_id>+ ;
+    p:P486 @<P486_mesh_id>* ;
+    p:P492 @<P492_omim_id>* ;
+    p:P493 @<P493_icd_9>* ;
+    p:P494 @<P494_icd_10>* ;
+    p:P1550 @<P1550_orphanet_id>* ;
+	p:P1748 @<P1748_nci_thesaurus>* ;
+    p:P2892 @<P2892_umls-cui>* ;
 
-    # P486 =  MeSH ID
-    p:P486 { ps:P486 LITERAL ;
-            prov:wasDerivedFrom @<do_reference> }* ;
-
-    # P492 =  OMIM ID
-    p:P492 { ps:P492 LITERAL ;
-             prov:wasDerivedFrom @<do_reference> }* ;
-
-    # P493 =  ICD 9
-    p:P493 { ps:P493 LITERAL ;
-             prov:wasDerivedFrom @<do_reference> }* ;
-
-    # P494 =  ICD 10
-    p:P494 { ps:P494 LITERAL ;
-             prov:wasDerivedFrom @<do_reference> }* ;
-
-    # P1550 = Orphanet ID
-    p:P1550 { ps:P1550 LITERAL ;
-             prov:wasDerivedFrom @<do_reference> }* ;
-
-    # P2892 = UMLS-CUI
-    p:P2892 { ps:P2892 LITERAL ;
-             prov:wasDerivedFrom @<do_reference> }* ;
-
+# Shape expression for Wikidata statements
+<P31_instance_of_disease> {
+	 ps:P31 [wd:Q12136] ; 
+	 prov:wasDerivedFrom @<do_reference> ;
 }
 
+<P486_mesh_id> { 
+	    ps:P486 LITERAL ;
+        prov:wasDerivedFrom @<do_reference> ;}
+
+<P492_omim_id> { 
+       ps:P492 LITERAL ;
+       prov:wasDerivedFrom @<do_reference> ;
+}
+
+<P493_icd_9> { 
+       ps:P493 LITERAL ;
+       prov:wasDerivedFrom @<do_reference> } ;
+	   
+<P494_icd_10> { 
+       ps:P494 LITERAL ;
+       prov:wasDerivedFrom @<do_reference> } ;
+
+<P699_disease_ontology_id> { 
+        ps:P699 LITERAL ;
+        prov:wasDerivedFrom @<do_reference> ;
+}
+	
+<P1550_orphanet_id> {
+       ps:P1550 LITERAL ;
+       prov:wasDerivedFrom @<do_reference> ;
+}
+	   
+<P1748_nci_thesaurus> {
+	  ps:P1748 LITERAL ;
+	  prov:wasDerivedFrom @<do_reference> ;
+}
+
+<P2888_exact_match> {
+		ps:P2888 IRI ;
+		prov:wasDerivedFrom @<miriam_reference> OR @<do_reference>+ ;
+}
+	   
+<P2892_umls-cui> { 
+       ps:P2892 LITERAL ;
+       prov:wasDerivedFrom @<do_reference> }* ;
+}
+
+# Shape expression of references used in Wikidata items sourced from the Disease Ontology
 <do_reference> {
   pr:P248	IRI ;
   pr:P699	LITERAL ;
@@ -92,7 +114,12 @@ start = @<wikidata-disease>
 
 }
 
-<wikidata-human_gene> {
+## Externally defined shape expressions
+
+# Wikidata-human_gene
+# Original shape expression: 
+
+<wikidata-human_gene> { 
     
 	# P279 = subclass of
 	p:P279 { prov:wasDerivedFrom @<ncbi-gene-reference> OR @<ensembl-gene-reference> }*;
