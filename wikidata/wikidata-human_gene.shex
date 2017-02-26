@@ -12,94 +12,119 @@ PREFIX ps: <http://www.wikidata.org/prop/statement/>
 start = <wikidata-human_gene>
 
 <wikidata-human_gene> {
-	# P279 = subclass of
-	p:P279 { ps:P279 [wd:Q7187] ;
-	         prov:wasDerivedFrom @<ncbi-gene-reference> OR @<ensembl-gene-reference> }*;
-	
-	# P703 = found in taxon 
-	p:P703 {
-     	ps:P703 [wd:Q15978631] ;
-	 	prov:wasDerivedFrom @<ensembl-gene-reference>+ 
-	 }{1} ;
-	
-	# P688 = encodes
-	p:P688 { prov:wasDerivedFrom @<uniprot-reference>}+;
-	
-	# P1057 = chromosome					
-	p:P1057	{
-	   ps:P1057 @<human-chromosomes> ;
-	   pq:P659	@<genomic-assembly>+ ;  
-	   prov:wasDerivedFrom @<ensembl-gene-reference>+ ;   
-	}* ;
-	
-	# P644 = genomic start
-	# P645 = genomic end
+    # STATEMENTS
+    p:P279 @<P279_subclass_of_gene> ;
 	(
-		p:P644 @<genomic-location-provenance>+;	
-		p:P645 @<genomic-location-provenance>+;
-	)*;
+		p:P644 @<P644_genomic_start>+ ;
+		p:P645 @<P645_genomic_end>+ ;
+	)*
+	p:P684 @<P684_ortholog>* ;
+	p:P688 @<P688_encodes>* ;
+	p:P703 @<P703_found_in_taxon_human>{1} ;
+	p:P1057 @<P1057_chromosome>* ;
+	p:P2888 @<P2888_exact_match>+ ;
+	p:P2548 @<P2548_strand_orrientation> ;
 	
-	# P684 = ortholog
-	p:P684	{
-	    pq:P703	IRI ;
-		prov:wasDerivedFrom	@<homologene-reference> ;
-	}* ;
+	#IDENTIFIERS
+	p:P351 @<ncbi_gene_id> ;
+	p:P354 @<hgnc_gene_symbol> ;
+	p:P594 @<ensembl_gene_id> ;
+	p:P639 @<refseq_rna_id> ;
+	p:P704 @<ensembl_transcript_id> ;
+	p:P593 @<homologene_id> ;
+}
+
+# Shape expression for Wikidata statements
+<P279_subclass_of_gene> { 
+    ps:P279 [wd:Q7187] ;
+	prov:wasDerivedFrom @<ncbi-gene-reference> OR @<ensembl-gene-reference> }*;
+}
+
+<P703_found_in_taxon_human> {	
+     ps:P703 [wd:Q15978631] ;
+	 prov:wasDerivedFrom @<ensembl-gene-reference>+ 
+} 
 	
-	# P2888 = exact match
-    p:P2888	{
-		prov:wasDerivedFrom {
-								pr:P248		[wd:Q16335166] ;
-								pr:P854		IRI ; }
-		}* ;
+<P688_encodes> {
+   ps:P688 IRI # TODO: Once the human proteina shape is finished this should change to @<human_protein>
+   prov:wasDerivedFrom @<uniprot-reference>}+;
+}
+
+<P1057_chromosome> {	
+   ps:P1057 @<human-chromosomes> ;
+   pq:P659	@<genomic-assembly>+ ;  
+   prov:wasDerivedFrom @<ensembl-gene-reference>+ ;   
+} 
+
+<P644_genomic_start> {
+   ps:P644 LITERAL ;
+   pq:P1057	@<human-chromosomes>+ ;	
+   pq:P659	@<genomic-assembly>+ ;
+   prov:wasDerivedFrom @<ensembl-gene-reference>+ ;
+}
+
+<P645_genomic_end> {
+   ps:P645 LITERAL ;
+   pq:P1057	@<human-chromosomes>+ ;	
+   pq:P659	@<genomic-assembly>+ ;
+   prov:wasDerivedFrom @<ensembl-gene-reference>+ ;
+}
 	
-	# P2548 = strand orientation 
-	p:P2548	{
-		    ps:P2548	@<strand-orrientation> ;
-		    pq:P659		@<genomic-assembly>+ ;
-		    prov:wasDerivedFrom @<ensembl-gene-reference> ;
-		}+ ;
+<P684_ortholog> {
+   ps:P684 IRI ;
+   pq:P703	IRI ;
+   prov:wasDerivedFrom	@<homologene-reference>+ ;
+    }*;
 	
-	## IDENTIFIERS
-	# P351 = Entrez Gene ID
-	p:P351 {
-			prov:wasDerivedFrom @<ncbi-gene-reference> ;
-			}* ; 
+<P2888_exact_match> {
+		ps:P2888 IRI ;
+		prov:wasDerivedFrom @<miriam_reference> OR @<do_reference>+ ;
+}
+
+<P2548_strand_orrientation> {	
+   ps:P2548	@<strand-orrientation> ;
+   pq:P659		@<genomic-assembly>+ ;
+   prov:wasDerivedFrom @<ensembl-gene-reference>+ ;
+}
 	
-	# P353 = HGNC gene symbol
-	p:P353 {
-			prov:wasDerivedFrom @<ncbi-gene-reference> ;
-			}* ;
+## IDENTIFIERS
+<P351_ncbi_gene_id> {
+	ps:P351 LITERAL ;
+	prov:wasDerivedFrom @<ncbi-gene-reference>+ ;
+}
 	
-	# P354 = HGNC gene ID
-	p:P354 {
-			prov:wasDerivedFrom @<ncbi-gene-reference> ;
-			}* ;
+<P353_hgnc_gene_symbol> {
+   ps:P353 LITERAL ;
+   prov:wasDerivedFrom @<ncbi-gene-reference>+ ;
+}
+
+<P354_hgnc_gene_id> {
+   ps:P354 LITERAL ;
+   prov:wasDerivedFrom @<ncbi-gene-reference>+ ;
+}
 	
-	# P594 = Enembl Gene ID
-	p:P594 {
-		prov:wasDerivedFrom @<ensembl-gene-reference>+ ;
-		}* ;
+<P594_ensembl_gene_id> {
+   ps:P594 LITERAL ;
+   prov:wasDerivedFrom @<ensembl-gene-reference>+
+}
 	
-	# P639 = RefSeq RNA ID
-	p:P639	{
-			prov:wasDerivedFrom @<ncbi-gene-reference> ;
-			}* ;
+<P639_refseq_rna_id> {
+   ps:P639 LITERAL ;
+   prov:wasDerivedFrom @<ncbi-gene-reference>+ ;
+}
 	
-	# P704 = Ensembl Transcript ID
-	p:P704	{
-		prov:wasDerivedFrom @<ensembl-gene-reference>+ ;
-	}* ;
+<P704_ensembl_transcript_id> {
+   ps:P704 LITERAL ;
+   prov:wasDerivedFrom @<ensembl-gene-reference>+ ;
+}
 	
-	# P593 = HomoloGene ID 
-	p:P593	{
-			prov:wasDerivedFrom @<ncbi-gene-reference> ;
-			}* ;
+<P593_homologene_id> {
+   ps:P593 LITERAL ;
+   prov:wasDerivedFrom @<ncbi-gene-reference>+ ;
 }
 
 
 ## PROVENANCE
-
-
 <ncbi-gene-reference> {
       pr:P248	[wd:Q20641742 wd:Q20950174 ] ;
 	  pr:P351	LITERAL ;
@@ -118,13 +143,6 @@ start = <wikidata-human_gene>
 	pr:P352	LITERAL ;
 	pr:P813	xsd:dateTime ;
 }
-
-<genomic-location-provenance> {
-	pq:P1057	@<human-chromosomes>+ ;	
-	pq:P659	@<genomic-assembly>+ ;
-	prov:wasDerivedFrom @<ensembl-gene-reference>+ ;  
-} 
-
 
 <homologene-reference> {
 	pr:P248 IRI;
@@ -158,9 +176,8 @@ start = <wikidata-human_gene>
 				wd:Q61333  # human chromosome X
 				wd:Q202771  # human chromosome Y
 				wd:Q27075  # human chromosome MT
-
 			]
-			
+						
 <genomic-assembly> [
    				wd:Q20966585 # Genome assembly GRCh38
 				wd:Q21067546 # Genome assembly GRCh37
