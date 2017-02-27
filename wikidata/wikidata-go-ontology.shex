@@ -1,0 +1,48 @@
+PREFIX wd: <http://www.wikidata.org/entity/>
+PREFIX wdt: <http://www.wikidata.org/prop/direct/>
+PREFIX p: <http://www.wikidata.org/prop/>
+PREFIX prov: <http://www.w3.org/ns/prov#>
+PREFIX pq: <http://www.wikidata.org/prop/qualifier/>
+PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>
+PREFIX prv: <http://www.wikidata.org/prop/reference/value/>
+PREFIX pr:  <http://www.wikidata.org/prop/reference/>
+PREFIX ps: <http://www.wikidata.org/prop/statement/>
+
+start = @<wikidata-go-ontology-term>
+
+<wikidata-go-ontology-term> {
+   # STATEMENTS
+   p:P279 {@<wikidata-go-ontology-term>* ;
+      prov:wasDerivedFrom @<go_reference> ;
+	  }
+   p:P128 @<P128_regulates_molecular_biology>+ ;
+   p:P2888 @<P2888_exact_match>* ;  
+   
+   # IDENTIFIERS
+   p:P686 @<P686_gene_ontology_id>{1} ;
+}
+
+# Shape expressions for Wikidata statements
+<P2888_exact_match> {
+		ps:P2888 IRI ;
+		prov:wasDerivedFrom @<miriam_reference> ;
+} 
+
+<P128_regulates_molecular_biology> {
+        ps:P128 <wikidata-go-ontology-term>+ ;
+		pq:P794 @<regulation-of-biological-process>* ;
+		prov:wasDerivedFrom @<go_reference> ;
+}
+
+## REFERENCES
+<go-reference> {
+      pr:P248	[wd:Q135085] ; # Q135085 = Gene Ontology
+	  pr:P143	[wd:Q22230760] ; # Q22230760 = Ontology Lookup Service
+	  pr:P813	xsd:dateTime ;
+	  prv:P407	[wd:Q1860] ; # Q1860 = English
+} 
+
+<miriam_reference> {
+  pr:P248		[wd:Q16335166] ;
+  pr:P854		IRI ;
+}
