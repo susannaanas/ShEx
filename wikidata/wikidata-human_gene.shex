@@ -9,15 +9,15 @@ PREFIX prv: <http://www.wikidata.org/prop/reference/value/>
 PREFIX pr:  <http://www.wikidata.org/prop/reference/>
 PREFIX ps: <http://www.wikidata.org/prop/statement/>
 
-start = <wikidata-human_gene>
+start = @<wikidata-human_gene>
 
 <wikidata-human_gene> {
     # STATEMENTS
-    p:P279 @<P279_subclass_of_gene> ;
+    p:P279 @<P279_subclass_of_gene>+ ;
 	(
 		p:P644 @<P644_genomic_start>+ ;
 		p:P645 @<P645_genomic_end>+ ;
-	)*
+	)* ;
 	p:P684 @<P684_ortholog>* ;
 	p:P688 @<P688_encodes>* ;
 	p:P703 @<P703_found_in_taxon_human>{1} ;
@@ -26,34 +26,19 @@ start = <wikidata-human_gene>
 	p:P2548 @<P2548_strand_orrientation> ;
 	
 	#IDENTIFIERS
-	p:P351 @<ncbi_gene_id> ;
-	p:P354 @<hgnc_gene_symbol> ;
-	p:P594 @<ensembl_gene_id> ;
-	p:P639 @<refseq_rna_id> ;
-	p:P704 @<ensembl_transcript_id> ;
-	p:P593 @<homologene_id> ;
+	p:P351 @<P351_ncbi_gene_id>{1} ;
+	p:P353 @<P353_hgnc_gene_symbol>* ;
+	p:P354 @<P354_hgnc_gene_id>* ;
+	p:P594 @<P594_ensembl_gene_id>* ;
+	p:P639 @<P639_refseq_rna_id>* ;
+	p:P704 @<P704_ensembl_transcript_id>* ;
+	p:P593 @<P593_homologene_id>* ;
 }
 
-# Shape expression for Wikidata statements
+# Shape expressions for Wikidata statements
 <P279_subclass_of_gene> { 
-    ps:P279 [wd:Q7187] ;
-	prov:wasDerivedFrom @<ncbi-gene-reference> OR @<ensembl-gene-reference> }*;
-}
-
-<P703_found_in_taxon_human> {	
-     ps:P703 [wd:Q15978631] ;
-	 prov:wasDerivedFrom @<ensembl-gene-reference>+ 
-} 
-	
-<P688_encodes> {
-   ps:P688 IRI # TODO: Once the human proteina shape is finished this should change to @<human_protein>
-   prov:wasDerivedFrom @<uniprot-reference>}+;
-}
-
-<P1057_chromosome> {	
-   ps:P1057 @<human-chromosomes> ;
-   pq:P659	@<genomic-assembly>+ ;  
-   prov:wasDerivedFrom @<ensembl-gene-reference>+ ;   
+    ps:P279 @<gene_types> ;
+	prov:wasDerivedFrom @<ncbi-gene-reference> OR @<ensembl-gene-reference> ;
 } 
 
 <P644_genomic_start> {
@@ -74,11 +59,27 @@ start = <wikidata-human_gene>
    ps:P684 IRI ;
    pq:P703	IRI ;
    prov:wasDerivedFrom	@<homologene-reference>+ ;
-    }*;
+}
+
+<P688_encodes> {
+   ps:P688 IRI ; # TODO: Once the human proteina shape is finished this should change to @<human_protein>
+   prov:wasDerivedFrom @<uniprot-reference>+;
+}
+
+<P703_found_in_taxon_human> {	
+     ps:P703 [wd:Q15978631] ;
+	 prov:wasDerivedFrom @<ensembl-gene-reference>+ 
+} 
+
+<P1057_chromosome> {	
+   ps:P1057 @<human-chromosomes> ;
+   pq:P659	@<genomic-assembly>+ ;  
+   prov:wasDerivedFrom @<ensembl-gene-reference>+ ;   
+}
 	
 <P2888_exact_match> {
 		ps:P2888 IRI ;
-		prov:wasDerivedFrom @<miriam_reference> OR @<do_reference>+ ;
+		prov:wasDerivedFrom @<miriam_reference> OR @<ncbi-gene-reference> ;
 }
 
 <P2548_strand_orrientation> {	
@@ -102,6 +103,11 @@ start = <wikidata-human_gene>
    ps:P354 LITERAL ;
    prov:wasDerivedFrom @<ncbi-gene-reference>+ ;
 }
+
+<P593_homologene_id> {
+   ps:P593 LITERAL ;
+   prov:wasDerivedFrom @<ncbi-gene-reference>+ ;
+}
 	
 <P594_ensembl_gene_id> {
    ps:P594 LITERAL ;
@@ -115,16 +121,10 @@ start = <wikidata-human_gene>
 	
 <P704_ensembl_transcript_id> {
    ps:P704 LITERAL ;
-   prov:wasDerivedFrom @<ensembl-gene-reference>+ ;
-}
-	
-<P593_homologene_id> {
-   ps:P593 LITERAL ;
-   prov:wasDerivedFrom @<ncbi-gene-reference>+ ;
+   prov:wasDerivedFrom @<ensembl-gene-reference> OR <ncbi-gene-reference>+ ;
 }
 
-
-## PROVENANCE
+## REFERENCES
 <ncbi-gene-reference> {
       pr:P248	[wd:Q20641742 wd:Q20950174 ] ;
 	  pr:P351	LITERAL ;
@@ -135,7 +135,6 @@ start = <wikidata-human_gene>
 <ensembl-gene-reference> {
       pr:P248	[wd:Q27975061] ;
 	  pr:P594	LITERAL ;
-	  # wdt:P813	xsd:dateTime ;
 }
 
 <uniprot-reference> {
@@ -147,8 +146,17 @@ start = <wikidata-human_gene>
 <homologene-reference> {
 	pr:P248 IRI;
 	pr:P593 LITERAL;
-	pr:P813	xsd:dateTime ;
 }
+
+<miriam_reference> {
+  pr:P248		[wd:Q16335166] ;
+  pr:P854		IRI ;
+}
+
+<gene_types> [
+				wd:Q7187 
+				wd:Q20747295
+			 ]
 
 <human-chromosomes> [
 				wd:Q430258  # human chromosome 1
@@ -187,3 +195,47 @@ start = <wikidata-human_gene>
 				wd:Q22809711 # reverse strand
 				wd:Q22809680 # forward strand
 ]
+
+
+########################################################
+##
+## Externally defined shape expressions
+##
+########################################################
+
+## <wikidata-human_protein.shex date: 27 february 2017
+## please check for updates. 
+## TODO: Discuss with ShEx dev team to allow remote embedding of external shapes. 
+##
+
+<wikidata-human_protein> {
+# STATEMENTS
+p:P279 @<P279_subclass_of_protein>+ ;
+p:P702 @<P703_found_in_taxon_human>+ ;
+
+# IDENTIFIERS
+p:P352 @<P352_uniprot_id>+ ;
+}
+
+# Shape expressions for Wikidata statements
+<P279_subclass_of_protein> { 
+    ps:P279 wd:Q8054 ;
+	prov:wasDerivedFrom @<uniprot-reference> ;
+} 
+
+<P352_uniprot_id> {
+	ps:P352 LITERAL ;
+	prov:wasDerivedFrom @<uniprot-reference>;
+}
+
+<P703_found_in_taxon_human> {	
+     ps:P703 [wd:Q15978631] ;
+	 prov:wasDerivedFrom @<uniprot-reference>+ ;
+} 
+
+# REFERENCES
+<uniprot-reference> {
+	pr:P248	[wd:Q905695] ;
+	pr:P352	LITERAL ;
+	pr:P813	xsd:dateTime ;
+}

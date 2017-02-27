@@ -84,7 +84,7 @@ start = @<wikidata-disease>
 
 <P2888_exact_match> {
 		ps:P2888 IRI ;
-		prov:wasDerivedFrom @<miriam_reference> OR @<do_reference>+ ;
+		prov:wasDerivedFrom @<miriam_reference> OR @<do_reference> ;
 } 
 	   
 <P2892_umls-cui> { 
@@ -211,9 +211,7 @@ start = @<wikidata-disease>
 } 
 
 
-## PROVENANCE
-
-
+## REFERENCES
 <ncbi-gene-reference> {
       pr:P248	[wd:Q20641742 wd:Q20950174 ] ;
 	  pr:P351	LITERAL ;
