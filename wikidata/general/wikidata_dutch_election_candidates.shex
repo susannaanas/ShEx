@@ -1,0 +1,35 @@
+PREFIX wd: <http://www.wikidata.org/entity/>
+PREFIX wdt: <http://www.wikidata.org/prop/direct/>
+PREFIX p: <http://www.wikidata.org/prop/>
+PREFIX prov: <http://www.w3.org/ns/prov#>
+PREFIX pq: <http://www.wikidata.org/prop/qualifier/>
+PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>
+PREFIX prv: <http://www.wikidata.org/prop/reference/value/>
+PREFIX pr:  <http://www.wikidata.org/prop/reference/>
+PREFIX ps: <http://www.wikidata.org/prop/statement/>
+
+start = @<wikidata-dutch_election_candidates.shex>
+
+<wikidata-dutch_election_candidates.shex> {
+  p:P31 @<P31_instance_of_candidate> ;
+}
+
+<P31_instance_of_candidate> {
+    ps:P31 [wd:Q618536] ; 
+	pq:P642 [wd:Q16061881] ;
+	pq:P1268 @<political_party>{1} ;
+	pq:P1545 LITERAL{1} ;
+  	prov:wasDerivedFrom @<kiesraad_reference> ;
+  }
+}
+
+<political_party> {
+   p:P31	{
+   		ps:P31 [wd:Q7278] 
+		ps:P17 [wd:Q55]
+   }
+}
+
+<kiesraad_reference> {         	 	pr:P854	["https://www.kiesraad.nl/binaries/kiesraad/documenten/rapporten/2017/2/definitieve-kandidatenlijsten-tk-2017/definitieve-kandidatenlijsten-tk2017-kieskring-s-gravenhage/osv3-9_Definitieve+kandidatenlijsten_TK2017_sGravenhage.pdf"]
+}
+
