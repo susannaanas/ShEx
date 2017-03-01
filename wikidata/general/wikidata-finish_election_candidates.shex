@@ -8,46 +8,37 @@ PREFIX prv: <http://www.wikidata.org/prop/reference/value/>
 PREFIX pr:  <http://www.wikidata.org/prop/reference/>
 PREFIX ps: <http://www.wikidata.org/prop/statement/>
 
-start = @<wikidata-finish_election_candidates.shex>
+start = @<wikidata-finnish_election_candidates.shex>
 
-<wikidata-finish_election_candidates.shex> {
-  p:P31 @<P31_instance_of_candidate> ;
-  p:P39 @<P39_position_held> ;
-  p:P3602 @<P3602_candidacy_in_election> ;
-  p:
+<wikidata-finnish_election_candidate.shex> {
+   p:P31 [Q5] ; # = human
+   p:P551 @<P551_residence> ;
+   p:P21 @<P21_sex_or_gender> ;
+   p:P106 @<P106_occupation> ;
+   p:P39 @<P39_position_held> ;
+   p:P3602 @<P3602_candidacy_in_election> ;
 }
 
-<P31_instance_of_candidate> {
-    ps:P31 [wd:Q618536] ; 
-	pq:P642 [wd:Q16061881] ;
-	pq:P1268 @<political_party>{1} ;
-	pq:P1545 LITERAL{1} ;
-  	prov:wasDerivedFrom @<kiesraad_reference> ;
-  }
-}
-
-<P39_position_held> {
-	# TODO
-}
+...
 
 <P3602_candidacy_in_election> {
-	ps:P3602	@<finish_election> ; # TODO: to be modelled
-	pq:P1268    @<political_party>{1} ; # P1268 = represents organisation
-	pq:P3629	LITERAL ;	# P3629 = stated age at event
-	pq:P1111	LITERAL ;	# P1111 = votes received
-	pq:P1545	LITERAL ;   # P1545 = series ordinal
-	pq:P768		@<municipality> ; # P768 = electoral district
-	prov:wasDerivedFrom @<kiesraad_reference> ; # TODO change the reference to the original source in the finnish context
+   ps:P3602	@<finnish_municipal_election> ; # TODO: to be modelled
+      pq:P1268	@<political_party>{1} ; # P1268 = represents organisation. May be a party, a slate or an electoral association
+      pq:P3629	LITERAL ;	# P3629 = stated age at event
+      pq:P1111	LITERAL ;	# P1111 = votes received
+      pq:P1545	LITERAL ;   # P1545 = series ordinal
+      pq:P768	@<municipality> ; # P768 = electoral district
 }
 
-<finish_election> {
-	# TODO
+<finnish_municipal_election> {
+   p:P31 @P ; # Q15154951 = Municipal elections in Finland
+   p:P361 
 }
 
 <political_party> {
    p:P31	{
-   		ps:P31 [wd:Q7278] # Q7278 = Political Party
-		ps:P17 [wd:Q33] # Q33 = Finland
+   	ps:P31 [wd:Q7278] # Q7278 = Political Party
+	ps:P17 [wd:Q33] # Q33 = Finland
    }
 }
 
