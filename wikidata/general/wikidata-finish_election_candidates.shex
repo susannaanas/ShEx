@@ -1,0 +1,64 @@
+PREFIX wd: <http://www.wikidata.org/entity/>
+PREFIX wdt: <http://www.wikidata.org/prop/direct/>
+PREFIX p: <http://www.wikidata.org/prop/>
+PREFIX prov: <http://www.w3.org/ns/prov#>
+PREFIX pq: <http://www.wikidata.org/prop/qualifier/>
+PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>
+PREFIX prv: <http://www.wikidata.org/prop/reference/value/>
+PREFIX pr:  <http://www.wikidata.org/prop/reference/>
+PREFIX ps: <http://www.wikidata.org/prop/statement/>
+
+start = @<wikidata-finish_election_candidates.shex>
+
+<wikidata-finish_election_candidates.shex> {
+  p:P31 @<P31_instance_of_candidate> ;
+  p:P39 @<P39_position_held> ;
+  p:P3602 @<P3602_candidacy_in_election> ;
+  p:
+}
+
+<P31_instance_of_candidate> {
+    ps:P31 [wd:Q618536] ; 
+	pq:P642 [wd:Q16061881] ;
+	pq:P1268 @<political_party>{1} ;
+	pq:P1545 LITERAL{1} ;
+  	prov:wasDerivedFrom @<kiesraad_reference> ;
+  }
+}
+
+<P39_position_held> {
+	# TODO
+}
+
+<P3602_candidacy_in_election> {
+	ps:P3602	@<finish_election> ; # TODO: to be modelled
+	pq:P1268    @<political_party>{1} ; # P1268 = represents organisation
+	pq:P3629	LITERAL ;	# P3629 = stated age at event
+	pq:P1111	LITERAL ;	# P1111 = votes received
+	pq:P1545	LITERAL ;   # P1545 = series ordinal
+	pq:P768		@<municipality> ; # P768 = electoral district
+	prov:wasDerivedFrom @<kiesraad_reference> ; # TODO change the reference to the original source in the finnish context
+}
+
+<finish_election> {
+	# TODO
+}
+
+<political_party> {
+   p:P31	{
+   		ps:P31 [wd:Q7278] # Q7278 = Political Party
+		ps:P17 [wd:Q33] # Q33 = Finland
+   }
+}
+
+<municipality> {
+   # TODO
+   ps:P361	@<electoral_district>
+}
+
+<electoral_district> {
+	#TODO
+}
+
+<kiesraad_reference> {         	 	pr:P854	["https://www.kiesraad.nl/binaries/kiesraad/documenten/rapporten/2017/2/definitieve-kandidatenlijsten-tk-2017/definitieve-kandidatenlijsten-tk2017-kieskring-s-gravenhage/osv3-9_Definitieve+kandidatenlijsten_TK2017_sGravenhage.pdf"]
+}
