@@ -22,34 +22,51 @@ start = @<wikidata-finnish_election_candidates.shex>
 ...
 
 <P3602_candidacy_in_election> {
-   ps:P3602	@<finnish_municipal_election> ; # TODO: to be modelled
+   ps:P3602	@<finnish_municipal_election> ; #
       pq:P1268	@<political_party>{1} ; # P1268 = represents organisation. May be a party, a slate or an electoral association
-      pq:P3629	LITERAL ;	# P3629 = stated age at event
-      pq:P1111	LITERAL ;	# P1111 = votes received
+      pq:P3629	LITERAL ;   # P3629 = stated age at event
+      pq:P1111	LITERAL ;   # P1111 = votes received
       pq:P1545	LITERAL ;   # P1545 = series ordinal
       pq:P768	@<municipality> ; # P768 = electoral district
 }
 
 <finnish_municipal_election> {
-   p:P31 @P ; # Q15154951 = Municipal elections in Finland
-   p:P361 
+   p:P31 [Q15154951] ; #  = Municipal elections in Finland
+   p:P361 [Q640715] ; # = part of Finnish municipal elections 2012
+   P17   [Q33] ; # = country Finland
+   P1001   @<municipality> ; # = applies to territorial jurisdisction
+   P585   datetime ; # = election day
+   P991   @<party or association or slate> ; # = successful candidate
+      P1114   LITERAL ; # = quantity (how many successful candidates did this party have)
+      P1539   LITERAL ; # = female population (how many of them were women)
+   P726   @<party or association or slate> ; # = candidate
+      P1114   LITERAL ; # = quantity (how many candidates did this party have)
+      P1539   LITERAL ; # = female population (how many of them were women)
+   P1867   LITERAL ; # = number of eligible voters in the election in this entity
+      P1539   LITERAL ; # = female population (how many of them were women)
+   P1868   LITERAL ; # = ballots cast
+   P1697   LITERAL ; # = total valid votes
+   P541 [Q18694248] ; # = office contested: municipality councillor in Finland
+      pq:P642   @<city council>  ;  # = of the city council
 }
 
 <political_party> {
-   p:P31	{
-   	ps:P31 [wd:Q7278] # Q7278 = Political Party
-	ps:P17 [wd:Q33] # Q33 = Finland
-   }
+   p:P31 [wd:Q7278] # Q7278 = Political Party / Electoral association / Slate
+   p:P17 [wd:Q33] # Q33 = Finland
+   P2124 LITERAL ; # = membership
+   P154 commons file ;#  = logo image
+   P465 LITERAL ; # = hex trplet for color representing the party
 }
 
 <municipality> {
-   # TODO
    ps:P361	@<electoral_district>
+   P37	@official language ; # = official language
+   	pq:P794 [Q61566] ; # = as minority language
+   P1203 LITERAL ; # = Finnish municipality number
+   P1831 LITERAL ; # = electorate (number of eligible voters in the municipality)
+   P361 @<electoral district> ; # = part of
 }
 
 <electoral_district> {
-	#TODO
-}
-
-<kiesraad_reference> {         	 	pr:P854	["https://www.kiesraad.nl/binaries/kiesraad/documenten/rapporten/2017/2/definitieve-kandidatenlijsten-tk-2017/definitieve-kandidatenlijsten-tk2017-kieskring-s-gravenhage/osv3-9_Definitieve+kandidatenlijsten_TK2017_sGravenhage.pdf"]
+   P31 [Q28657263] ; # = Electoral district of Finland
 }
